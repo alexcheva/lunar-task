@@ -19,3 +19,17 @@ I'm building it because I like to track my tasks and divide them between the day
   - *In that case, I will just have simple edit day functionality*
 - Auth0 for login/registration might have issues with authentification
   - *I will add simplified ability to register and login and store it in a separate table in my database*
+## User Flow
+![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+## Wireframes
+![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+## Data Model
+Tasks  | Journal
+------------- | -------------
+id - primary key | id - primary key
+text - varchar | text - varchar
+date - datetime | date - datetime
+user_id - foreign key  | user_id - foreign key 
