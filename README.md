@@ -20,12 +20,16 @@ I'm building it because I like to track my tasks and divide them between the day
 - Auth0 for login/registration might have issues with authentification
   - *I will add simplified ability to register and login and store it in a separate table in my database*
 ## User Flow
-![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+![user flow](imgs/user-flow.png "User Flow Chart")
 ## Wireframes
-![picture alt](http://via.placeholder.com/200x150 "Title is optional")
-![picture alt](http://via.placeholder.com/200x150 "Title is optional")
-![picture alt](http://via.placeholder.com/200x150 "Title is optional")
-![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+### Mobile Login
+![login mobile](imgs/login.png "Mobile login")
+### Mobile Sign up
+![sign up mobile](imgs/signup.png "Mobile Sign up")
+### Mobile Wireframes
+![mobile wireframes](imgs/wireframes-mobile.jpg "Mobile Wireframes")
+### Desktop Wireframes
+![desktop wireframes](imgs/wireframes-desktop.jpg "Desktop Wireframes")
 ## Data Model
 Tasks  | Journal
 ------------- | -------------
