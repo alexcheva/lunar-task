@@ -1,7 +1,9 @@
 import * as React from "react";
 
 import * as apiClient from "./apiClient";
+import Day from "./components/Day";
 import logo from "./moon-logo.svg";
+
 const App = () => {
   const [tasks, setTasks] = React.useState([]);
 
@@ -46,6 +48,9 @@ const App = () => {
         <h2>{formatDate()}</h2>
         <AddTask loadTasks={loadTasks} />
         <TaskList tasks={tasks} />
+      </section>
+      <section>
+        <Day />
       </section>
     </main>
   );
