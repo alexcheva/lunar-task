@@ -5,16 +5,47 @@ import * as apiClient from "./apiClient";
 const App = () => {
   const [tasks, setTasks] = React.useState([]);
 
+  const today = new Date();
+  const [date, setDate] = React.useState(today);
   const loadTasks = async () => setTasks(await apiClient.getTasks());
 
   React.useEffect(() => {
     loadTasks();
   }, []);
 
+  const formatDate = () => {
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    let day = daysOfWeek[date.getDay()];
+    let dd = String(date.getDate()).padStart(2, "0");
+    let mm = String(date.getMonth() + 1).padStart(2, "0");
+    let yyyy = date.getFullYear();
+
+    let dateValue = day + " " + mm + "/" + dd + "/" + yyyy;
+    return dateValue;
+  };
+
+  const changeDateValue = ({ addValue }) => {
+    setDate(date.setDate(date.getDate() + addValue));
+  };
+
   return (
     <main className="App">
-      <TaskList tasks={tasks} />
-      <AddTask loadTasks={loadTasks} />
+      <nav>
+        <h1>Lunar Task</h1>
+      </nav>
+      <section>
+        <h2>{formatDate()}</h2>
+        <AddTask loadTasks={loadTasks} />
+        <TaskList tasks={tasks} />
+      </section>
     </main>
   );
 };
@@ -22,7 +53,11 @@ const App = () => {
 const TaskList = ({ tasks }) => (
   <ul>
     {tasks.map(({ id, name }) => (
-      <li key={id}>{name}</li>
+      <li key={id}>
+        {name}
+        <button>Edit</button>
+        <button>Delete</button>
+      </li>
     ))}
   </ul>
 );
