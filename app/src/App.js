@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import * as apiClient from "./apiClient";
-
+import logo from "./moon-logo.svg";
 const App = () => {
   const [tasks, setTasks] = React.useState([]);
 
@@ -39,6 +39,7 @@ const App = () => {
   return (
     <main className="App">
       <nav>
+        <img id="header-logo" src={logo} alt="Lunar Task Logo" />
         <h1>Lunar Task</h1>
       </nav>
       <section>
