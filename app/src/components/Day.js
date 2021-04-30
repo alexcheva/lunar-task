@@ -7,7 +7,12 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 const Day = () => {
   const today = new Date();
   const [date, setDate] = React.useState(today);
+
   const formatDate = () => {
+    {
+      /*Date.prototype.toDateString()
+    Returns the "date" portion of the Date as a human-readable string like 'Thu Apr 12 2018'. */
+    }
     const daysOfWeek = [
       "Sunday",
       "Monday",
@@ -26,8 +31,12 @@ const Day = () => {
     return dateValue;
   };
 
-  const changeDateValue = ({ addValue }) => {
-    setDate(date.setDate(date.getDate() + addValue));
+  const changeDateValue = (addValue) => {
+    {
+      /* setDate(date.setDate(date.getDate() + addValue)); */
+    }
+    const ePopTime = date.setDate(date.getDate() + addValue);
+    setDate(new Date(ePopTime));
   };
 
   return (
@@ -36,11 +45,15 @@ const Day = () => {
         variant="top"
         src="https://www.icalendar37.net/lunar/api/i.png"
       />
-
       <Card.Body>
         <Card.Title>
-          <i class="bi bi-arrow-left-circle"></i> {formatDate()}{" "}
-          <i class="bi bi-arrow-right-circle"></i>
+          <button onClick={() => changeDateValue(-1)}>
+            <i className="bi bi-arrow-left-circle"></i>
+          </button>{" "}
+          {formatDate()}{" "}
+          <button onClick={() => changeDateValue(+1)}>
+            <i className="bi bi-arrow-right-circle"></i>
+          </button>
         </Card.Title>
         <Card.Text>
           Some quick example text to build on the card title and make up the
