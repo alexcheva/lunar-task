@@ -51,7 +51,7 @@ const Day = () => {
             <i className="bi bi-arrow-left-circle"></i>
           </button>{" "}
           {formatDate()}{" "}
-          <button onClick={() => changeDateValue(+1)}>
+          <button onClick={() => changeDateValue(1)}>
             <i className="bi bi-arrow-right-circle"></i>
           </button>
         </Card.Title>
