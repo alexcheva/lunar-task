@@ -1,42 +1,28 @@
 import * as React from "react";
 
+import dayjs from "dayjs";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 
+import * as apiClient from "../apiClient";
+
 const Day = () => {
-  const today = new Date();
+  const today = dayjs();
   const [date, setDate] = React.useState(today);
+  const [tasks, setTasks] = React.useState([]);
 
-  const formatDate = () => {
-    {
-      /*Date.prototype.toDateString()
-    Returns the "date" portion of the Date as a human-readable string like 'Thu Apr 12 2018'. */
-    }
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    let day = daysOfWeek[date.getDay()];
-    let dd = String(date.getDate()).padStart(2, "0");
-    let mm = String(date.getMonth() + 1).padStart(2, "0");
-    let yyyy = date.getFullYear();
+  const loadTasks = async () => setTasks(await apiClient.getTasks());
 
-    let dateValue = day + " " + mm + "/" + dd + "/" + yyyy;
-    return dateValue;
-  };
+  React.useEffect(() => {
+    loadTasks();
+  }, []);
 
   const changeDateValue = (addValue) => {
     {
       /* setDate(date.setDate(date.getDate() + addValue)); */
     }
-    const ePopTime = date.setDate(date.getDate() + addValue);
-    setDate(new Date(ePopTime));
+    setDate(date.add(addValue, "day"));
   };
 
   return (
@@ -50,7 +36,7 @@ const Day = () => {
           <button onClick={() => changeDateValue(-1)}>
             <i className="bi bi-arrow-left-circle"></i>
           </button>{" "}
-          {formatDate()}{" "}
+          {date.format("ddd MMM D YYYY")}{" "}
           <button onClick={() => changeDateValue(1)}>
             <i className="bi bi-arrow-right-circle"></i>
           </button>
@@ -62,21 +48,52 @@ const Day = () => {
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroupItem>
-          <form>
-            <label>
-              New task: <input />
-            </label>
-            <button>Add</button>
-          </form>
+          <AddTask loadTasks={loadTasks} />
         </ListGroupItem>
-        <ListGroupItem>
-          Cras justo odio <i class="bi bi-pencil-square"></i>{" "}
-          <i class="bi bi-trash-fill"></i>
-        </ListGroupItem>
-        <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-        <ListGroupItem>Vestibulum at eros</ListGroupItem>
       </ListGroup>
+      <TaskList tasks={tasks} />
     </Card>
+  );
+};
+
+const TaskList = ({ tasks }) => (
+  <ListGroup className="list-group-flush">
+    {tasks.map(({ id, name }) => (
+      <ListGroupItem key={id}>
+        {name}
+        <button>
+          <i className="bi bi-pencil-square"></i>
+        </button>
+        <button>
+          <i className="bi bi-trash-fill"></i>
+        </button>
+      </ListGroupItem>
+    ))}
+  </ListGroup>
+);
+
+const AddTask = ({ loadTasks }) => {
+  const [task, setTask] = React.useState("");
+
+  const canAdd = task !== "";
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (canAdd) {
+      await apiClient.addTask(task);
+      loadTasks();
+      setTask("");
+    }
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <label>
+        New task:{" "}
+        <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
+      </label>
+      <button disabled={!canAdd}>Add</button>
+    </form>
   );
 };
 
