@@ -27,11 +27,6 @@ const App = () => {
           </ul>
         </nav>
         <Switch>
-          <Route path="/">
-            <section>
-              <Day />
-            </section>
-          </Route>
           <Route path="/week">
             <section>
               <Week />
@@ -39,6 +34,11 @@ const App = () => {
           </Route>
           <Route path="/calendar">
             <h1>Calendar view</h1>
+          </Route>
+          <Route path="/">
+            <section>
+              <Day />
+            </section>
           </Route>
         </Switch>
       </main>
