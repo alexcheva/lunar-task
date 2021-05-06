@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 import App from "./App";
-import { Auth0Provider } from "@auth0/auth0-react";
 import reportWebVitals from "./reportWebVitals";
 import "./App.css";
 ReactDOM.render(
