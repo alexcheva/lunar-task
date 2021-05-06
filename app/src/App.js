@@ -1,6 +1,7 @@
 import * as React from "react";
 
 // import * as apiClient from "./apiClient";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Day from "./components/Day";
