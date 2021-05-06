@@ -20,7 +20,7 @@ function load_moon_phases(obj,callback){
 function example_3(moon){     
   var lunar_day , i , inc = 0
   var containsCalendar =  document.getElementById("ex3")
-  const first_day_week_sunday = false // canvia el valor d'aquesta constant a true perquè el primer dia de la setmana sigui Diumenge
+  const first_day_week_sunday = false 
   if (first_day_week_sunday) {
       inc = 1
       moon.nameDay.unshift(moon.nameDay.pop())        
