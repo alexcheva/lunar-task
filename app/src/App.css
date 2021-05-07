@@ -1,0 +1,65 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css");
+body {
+  background-color: lavender;
+}
+.App {
+  width: 80%;
+  margin: auto;
+  text-align: left;
+  font-family: "Roboto", sans-serif;
+}
+div#root {
+  font-weight: 500;
+}
+img#header-logo {
+  float: left;
+  height: 2rem;
+  margin-right: 1rem;
+}
+.card-img,
+.card-img-bottom,
+.card-img-top {
+  flex-shrink: 0;
+  width: 40%;
+  margin: auto;
+  padding-top: 1em;
+}
+/* nav {
+  text-align: end;
+}
+
+li {
+  display: inline-block;
+  padding: 0.8rem;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+}
+nav li a {
+  color: #ffeb00;
+  font-size: 1.3rem;
+  text-shadow: 2px 2px #7e0000;
+}
+nav li a:hover {
+  color: #ffeb00;
+}
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+input[type="submit"] {
+  padding: 10px 15px;
+  font-weight: 600;
+  background: #7ed549;
+  border-radius: 9px;
+  border-color: #673ab7;
+  letter-spacing: 0.025em;
+  color: #000429;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+input[type="submit"]:active {
+  background: #1cccfb;
+} */
