@@ -24,6 +24,10 @@ img#header-logo {
   margin: auto;
   padding-top: 1em;
 }
+.card {
+  min-width: 20%;
+  margin: 1em;
+}
 /* nav {
   text-align: end;
 }
