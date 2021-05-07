@@ -11,7 +11,7 @@ const Calendar = () => {
   const [daysInMonth, setDaysInMonth] = React.useState(month.daysInMonth());
   const dates = [];
   for (let i = 0; i < daysInMonth; i++) {
-    dates.push(month.add(i, "day"));
+    dates.push(month.date(i));
   }
   console.log(dates);
   //link to days
@@ -51,7 +51,7 @@ const DayOfMonth = ({ date }) => {
         src="https://www.icalendar37.net/lunar/api/i.png"
       />
       <Card.Body>
-        <Card.Title>{date.format("ddd D")}</Card.Title>
+        <Card.Title>{date.format("ddd MMM D")}</Card.Title>
         <Card.Text>
           Some quick example text to build on the card title and make up the
           bulk of the card's content.
