@@ -71,6 +71,7 @@ COPY public.tasks (id, name) FROM stdin;
 3	End white supremacy
 4	Advocate for living wage
 5	Provide universal health care
+6	Stop George from making us use Docker!
 \.
 
 
@@ -78,7 +79,7 @@ COPY public.tasks (id, name) FROM stdin;
 -- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tasks_id_seq', 5, true);
+SELECT pg_catalog.setval('public.tasks_id_seq', 6, true);
 
 
 --
