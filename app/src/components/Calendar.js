@@ -10,7 +10,7 @@ const Calendar = () => {
   const [month, setMonth] = React.useState(dayjs());
   const [daysInMonth, setDaysInMonth] = React.useState(month.daysInMonth());
   const dates = [];
-  for (let i = 0; i < daysInMonth; i++) {
+  for (let i = 1; i <= daysInMonth; i++) {
     dates.push(month.date(i));
   }
   console.log(dates);
