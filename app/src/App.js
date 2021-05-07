@@ -3,6 +3,7 @@ import * as React from "react";
 // import * as apiClient from "./apiClient";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import Calendar from "./components/Calendar";
 import Day from "./components/Day";
 import Week from "./components/Week";
 import logo from "./moon-logo.svg";
@@ -33,7 +34,7 @@ const App = () => {
             </section>
           </Route>
           <Route path="/calendar">
-            <h1>Calendar view</h1>
+            <Calendar />
           </Route>
           <Route path="/">
             <section>
