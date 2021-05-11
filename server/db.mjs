@@ -3,8 +3,7 @@ import pgp from "pg-promise";
 
 const db = initDb();
 
-export const getTasks = async (date) =>
-  await db.any("SELECT * FROM tasks WHERE date=date");
+export const getTasks = async () => await db.any("SELECT * FROM tasks");
 //week get dates[0] dates[6] and query the range
 
 export const addTask = async (task) => {
@@ -24,7 +23,7 @@ function initDb() {
   if (process.env.DATABASE_URL === undefined) {
     dotenv.config({ path: "../.env" });
     connection = {
-      user: "tpl2_2021h1",
+      user: "postgres",
       database: process.env.POSTGRES_DB,
       password: process.env.POSTGRES_PASSWORD,
       port: 5442,

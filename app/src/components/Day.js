@@ -16,7 +16,7 @@ const Day = () => {
   const loadTasks = async (date) => setTasks(await apiClient.getTasks(date));
 
   React.useEffect(() => {
-    loadTasks(date.$d);
+    loadTasks();
   }, []);
 
   const changeDateValue = (addValue) => {
