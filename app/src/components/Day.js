@@ -82,7 +82,7 @@ const AddTask = ({ loadTasks }) => {
     e.preventDefault();
     if (canAdd) {
       await apiClient.addTask(task);
-      loadTasks(day);
+      loadTasks();
       setTask("");
     }
   };
