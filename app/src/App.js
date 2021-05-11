@@ -2,6 +2,7 @@ import * as React from "react";
 
 // import * as apiClient from "./apiClient";
 import { useAuth0 } from "@auth0/auth0-react";
+import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
@@ -27,69 +28,73 @@ const App = () => {
   const username = user.email ? user.email : user.username;
   return isAuthenticated ? (
     <Router>
-      <main className="App">
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand>
-            <img
-              alt="Lunar Task Logo"
-              src={logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{" "}
-            Lunar Task
-          </Navbar.Brand>
+      <main>
+        <Container fluid>
+          <Navbar bg="dark" variant="dark">
+            <Navbar.Brand>
+              <img
+                alt="Lunar Task Logo"
+                src={logo}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+              />{" "}
+              Lunar Task
+            </Navbar.Brand>
 
-          {/* <img src={user.picture} alt={user.name} /> */}
-          {/* <nav>
+            {/* <img src={user.picture} alt={user.name} /> */}
+            {/* <nav>
           <img id="header-logo" src={logo} alt="Lunar Task Logo" />
           <h1>Lunar Task</h1>
         </nav> */}
-          <Nav className="justify-content-end" activeKey="/home">
-            <Nav.Item>
-              <Nav.Link active>
-                <Link to="/">Day View</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="link-1">
-                <Link to="/week">Week View</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="link-2">
-                <Link to="/calendar">Calendar View</Link>
-              </Nav.Link>
-            </Nav.Item>
+            <Nav className="justify-content-end" activeKey="/home">
+              <Nav.Item>
+                <Nav.Link active>
+                  <Link to="/">Day View</Link>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="link-1">
+                  <Link to="/week">Week View</Link>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="link-2">
+                  <Link to="/calendar">Calendar View</Link>
+                </Nav.Link>
+              </Nav.Item>
 
-            <NavDropdown title={username} id="nav-dropdown">
-              <NavDropdown.Item eventKey="3.1">Profile</NavDropdown.Item>
-              <NavDropdown.Item eventKey="3.2">Journal</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item
-                eventKey="3.3"
-                onClick={() => logout({ returnTo: window.location.origin })}
-              >
-                Log Out
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar>
-        <Switch>
-          <Route path="/week">
-            <section>
-              <Week />
-            </section>
-          </Route>
-          <Route path="/calendar">
-            <Calendar />
-          </Route>
-          <Route path="/">
-            <section>
-              <Day />
-            </section>
-          </Route>
-        </Switch>
+              <NavDropdown title={username} id="nav-dropdown">
+                <NavDropdown.Item eventKey="3.1">Profile</NavDropdown.Item>
+                <NavDropdown.Item eventKey="3.2">Journal</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  eventKey="3.3"
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  Log Out
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar>
+        </Container>
+        <Container>
+          <Switch>
+            <Route path="/week">
+              <section>
+                <Week />
+              </section>
+            </Route>
+            <Route path="/calendar">
+              <Calendar />
+            </Route>
+            <Route path="/">
+              <section>
+                <Day />
+              </section>
+            </Route>
+          </Switch>
+        </Container>
       </main>
     </Router>
   ) : (
