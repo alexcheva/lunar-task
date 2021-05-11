@@ -7,15 +7,16 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 
 import * as apiClient from "../apiClient";
 
+const day = dayjs().$d;
 const Day = () => {
   const today = dayjs();
   const [date, setDate] = React.useState(today);
   const [tasks, setTasks] = React.useState([]);
 
-  const loadTasks = async () => setTasks(await apiClient.getTasks());
+  const loadTasks = async (date) => setTasks(await apiClient.getTasks(date));
 
   React.useEffect(() => {
-    loadTasks();
+    loadTasks(date.$d);
   }, []);
 
   const changeDateValue = (addValue) => {
@@ -58,9 +59,9 @@ const Day = () => {
 
 const TaskList = ({ tasks }) => (
   <ListGroup className="list-group-flush">
-    {tasks.map(({ id, name }) => (
+    {tasks.map(({ id, task }) => (
       <ListGroupItem key={id}>
-        {name}
+        {task}
         <button>
           <i className="bi bi-pencil-square"></i>
         </button>
@@ -81,7 +82,7 @@ const AddTask = ({ loadTasks }) => {
     e.preventDefault();
     if (canAdd) {
       await apiClient.addTask(task);
-      loadTasks();
+      loadTasks(day);
       setTask("");
     }
   };

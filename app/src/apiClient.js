@@ -1,4 +1,4 @@
-export const getTasks = async () => {
+export const getTasks = async (date) => {
   const response = await fetch("/api/tasks");
   return response.json();
 };
