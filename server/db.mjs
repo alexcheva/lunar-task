@@ -3,14 +3,18 @@ import pgp from "pg-promise";
 
 const db = initDb();
 
-export const getTasks = async () => await db.any("SELECT * FROM tasks");
-//week get dates[0] dates[6] and query the range
+export const getTasks = async (date) => {
+  await db.any("SELECT * FROM tasks WHERE date=$1", [date]);
+  //week get dates[0] dates[6] and query the range
+  //getTasks(new Date(2021, 4, 12)).then((result) => console.log(result));
+};
+//get tasks by week
 
 export const addTask = async (task) => {
   const today = new Date();
   const user_id = 1;
 
-  (
+  return (
     await db.any(
       "INSERT INTO tasks(task,date,user_id) VALUES($1,$2,$3) RETURNING id, task, date, user_id",
       [task, today, user_id],

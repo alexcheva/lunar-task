@@ -9,7 +9,9 @@ const port = process.env.PORT || 4000;
 const tasks = express.Router();
 
 tasks.get("/", async (request, response) => {
-  const tasks = await db.getTasks();
+  const date = request.query.date;
+  //condition weather request query by date or by week
+  const tasks = await db.getTasks(date);
   response.json(tasks);
 });
 
@@ -17,6 +19,7 @@ tasks.use(express.json());
 tasks.post("/", async (request, response) => {
   const { task } = request.body;
   const entry = await db.addTask(task);
+  console.log({ entry });
   response.status(201).json(entry);
 });
 
