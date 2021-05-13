@@ -1,15 +1,28 @@
 import * as React from "react";
 
-// import * as apiClient from "./apiClient";
 import { useAuth0 } from "@auth0/auth0-react";
+import dayjs from "dayjs";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import * as apiClient from "./apiClient";
 import Calendar from "./components/Calendar";
 import Day from "./components/Day";
 import Week from "./components/Week";
 import logo from "./moon-logo.svg";
 
+const month = dayjs().get("month");
+const year = dayjs().get("year");
+const moonPhaseUrl = `https://www.icalendar37.net/lunar/api/?lang=en&month=${month}&year=${year}&size=150&lightColor=rgb(255%2C255%2C210)&shadeColor=black&texturize=false&LDZ=1619852400`;
+
+// export const getMoonPhases = async (url) => {
+//   const response = await fetch(url);
+//   const data = response.json();
+//   console.log(data);
+//   return data;
+// };
+
 const App = () => {
+  const [moonPhaseData, setMoonPhaseData] = React.useState({});
   const {
     user,
     isAuthenticated,
@@ -17,6 +30,13 @@ const App = () => {
     loginWithRedirect,
     logout,
   } = useAuth0();
+
+  const loadMoonData = async () =>
+    setMoonPhaseData(await apiClient.getMoonData(moonPhaseUrl));
+
+  React.useEffect(() => {
+    loadMoonData();
+  }, []);
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -55,7 +75,7 @@ const App = () => {
             </section>
           </Route>
           <Route path="/calendar">
-            <Calendar />
+            <Calendar data={moonPhaseData} />
           </Route>
           <Route path="/">
             <section>

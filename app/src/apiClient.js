@@ -5,6 +5,10 @@ export const getTasks = async (date) => {
 
 //get tasks by week
 //startDate endDate
+export const getMoonData = async (url) => {
+  const response = await fetch(url);
+  return response.json();
+};
 
 export const addTask = async (task) => {
   const response = await fetch("/api/tasks", {

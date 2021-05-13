@@ -6,14 +6,17 @@ import dayjs from "dayjs";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 
-const Calendar = () => {
+const Calendar = (data) => {
   const [month, setMonth] = React.useState(dayjs());
   const [daysInMonth, setDaysInMonth] = React.useState(month.daysInMonth());
   const dates = [];
   for (let i = 1; i <= daysInMonth; i++) {
     dates.push(month.date(i));
   }
-  console.log(dates);
+  data.then((innerData) => {
+    console.log(innerData);
+  });
+  console.log(data);
   //link to days
   //   Get the number of days in the current month.
   //     dayjs('2019-01-25').daysInMonth()
@@ -34,7 +37,7 @@ const Calendar = () => {
       </button>
       <CardGroup>
         {dates.map((date, i) => (
-          <DayOfMonth date={date} key={i} />
+          <DayOfMonth date={date} key={i} data={data.phase[i]} />
         ))}
       </CardGroup>
     </section>
@@ -43,7 +46,7 @@ const Calendar = () => {
 {
   /* <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" /> */
 }
-const DayOfMonth = ({ date }) => {
+const DayOfMonth = ({ date, data }) => {
   return (
     <Card>
       <Card.Img
@@ -53,6 +56,7 @@ const DayOfMonth = ({ date }) => {
       <Card.Body>
         <Card.Title>{date.format("ddd MMM D")}</Card.Title>
         <Card.Text>
+          {data.phaseName}
           Some quick example text to build on the card title and make up the
           bulk of the card's content.
         </Card.Text>
