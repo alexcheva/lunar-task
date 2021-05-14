@@ -22,6 +22,7 @@ const Day = (data) => {
   const changeDateValue = (addValue) => {
     setDate(date.add(addValue, "day"));
   };
+  // console.log(data);
   const regex = /\\/g;
   const svg = data.data.phase[date.date()].svg;
   //svg.replace(regex, "");

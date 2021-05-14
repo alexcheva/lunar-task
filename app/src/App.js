@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
-
 import dayjs from "dayjs";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -48,7 +47,7 @@ const App = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-  
+
   const username = user.email ? user.email : user.username;
 
   return isAuthenticated ? (
