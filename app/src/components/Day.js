@@ -13,7 +13,7 @@ const Day = (data) => {
   const [date, setDate] = React.useState(today);
   const [tasks, setTasks] = React.useState([]);
 
-  const loadTasks = async (date) => setTasks(await apiClient.getTasks(date));
+  const loadTasks = async () => setTasks(await apiClient.getTasks(date));
 
   React.useEffect(() => {
     loadTasks();
@@ -26,10 +26,8 @@ const Day = (data) => {
   const svg = data.data.phase[date.date()].svg;
   //svg.replace(regex, "");
   svg.replace("xlink:href", "href");
-  console.log(svg);
   const link = "https://www.icalendar37.net/lunar/app/";
   svg.replace(link, "");
-  console.log(svg);
   return (
     <Card style={{ width: "18rem" }}>
       {/*<Card.Img
@@ -95,6 +93,8 @@ const Day = (data) => {
         <Card.Text>
           {data.data.phase[date.date()].phaseName}
           {/*data.data.phase[date.date()].npWidget*/}
+          <br />
+          {moonPhases[data.data.phase[date.date()].phaseName].action}
           <br />
           {moonPhases[data.data.phase[date.date()].phaseName].desc}
         </Card.Text>

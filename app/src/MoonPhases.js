@@ -13,7 +13,7 @@ export const moonPhases = {
       "It's time for a clean slate, start to gather your thoughts and plan.",
   },
   Waxing: {
-    action: "Take Action",
+    action: "Set Intentions",
     desc: "Send your hopes and desires into the world.",
   },
   "First quarter": {

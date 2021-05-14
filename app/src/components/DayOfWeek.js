@@ -24,6 +24,8 @@ const DayOfWeek = ({ date, svg, data }) => {
         <Card.Text>
           {data}
           <br />
+          {moonPhases[data].action}
+          <br />
           {moonPhases[data].desc}
         </Card.Text>
       </Card.Body>
