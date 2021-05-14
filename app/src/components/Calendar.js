@@ -6,22 +6,36 @@ import dayjs from "dayjs";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 
-const Calendar = () => {
+import { moonPhases } from "../MoonPhases";
+import * as apiClient from "../apiClient";
+
+const Calendar = (data) => {
   const [month, setMonth] = React.useState(dayjs());
   const [daysInMonth, setDaysInMonth] = React.useState(month.daysInMonth());
+  // const [moonData, setMoonData] = React.useState({});
+
+  // const loadMoonData = async () => setMoonData(await apiClient.getMoonData());
+
+  // React.useEffect(() => {
+  //   setMoonData(data);
+  //   loadMoonData().then((data) => setMoonData(data));
+  // }, []);
+
   const dates = [];
+  const svgs = [];
   for (let i = 1; i <= daysInMonth; i++) {
     dates.push(month.date(i));
+    svgs.push(data.data.phase[dates[i - 1].date()].svg);
   }
-  console.log(dates);
+  console.log(data.data.phase[1]);
+
   //link to days
-  //   Get the number of days in the current month.
-  //     dayjs('2019-01-25').daysInMonth()
   //pass in the date props
   //make different routes to the specific days
   //switch between months
   const changeMonthValue = (addValue) => {
     setMonth(month.add(addValue, "month"));
+    setDaysInMonth(month.daysInMonth());
   };
   return (
     <section>
@@ -34,7 +48,12 @@ const Calendar = () => {
       </button>
       <CardGroup>
         {dates.map((date, i) => (
-          <DayOfMonth date={date} key={i} />
+          <DayOfMonth
+            date={date}
+            key={i}
+            data={data.data.phase[dates[i].date()].phaseName}
+            svg={data.data.phase[dates[i].date()].svg}
+          />
         ))}
       </CardGroup>
     </section>
@@ -43,18 +62,17 @@ const Calendar = () => {
 {
   /* <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" /> */
 }
-const DayOfMonth = ({ date }) => {
+const DayOfMonth = ({ date, data, svg }) => {
   return (
     <Card>
-      <Card.Img
-        variant="top"
-        src="https://www.icalendar37.net/lunar/api/i.png"
-      />
+      <div className="svg" dangerouslySetInnerHTML={{ __html: svg }}></div>
       <Card.Body>
         <Card.Title>{date.format("ddd MMM D")}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+          {data} <br />
+          {moonPhases[data].action}
+          <br />
+          {moonPhases[data].desc}
         </Card.Text>
       </Card.Body>
     </Card>

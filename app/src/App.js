@@ -1,19 +1,35 @@
 import * as React from "react";
 
-// import * as apiClient from "./apiClient";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import dayjs from "dayjs";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import * as apiClient from "./apiClient";
 import Calendar from "./components/Calendar";
 import Day from "./components/Day";
 import Week from "./components/Week";
 import logo from "./moon-logo.svg";
 
+const month = dayjs().month();
+const year = dayjs().get("year");
+const moonPhaseUrl = `https://www.icalendar37.net/lunar/api/?lang=en&month=${
+  month + 1
+}&year=${year}&size=150&lightColor=rgb(255%2C255%2C210)&shadeColor=black&texturize=false&LDZ=1619852400`;
+
+// export const getMoonPhases = async (url) => {
+//   const response = await fetch(url);
+//   const data = response.json();
+//   console.log(data);
+//   return data;
+// };
+
 const App = () => {
+  const [moonPhaseData, setMoonPhaseData] = React.useState({});
   const {
     user,
     isAuthenticated,
@@ -22,10 +38,19 @@ const App = () => {
     logout,
   } = useAuth0();
 
+  const loadMoonData = async () =>
+    setMoonPhaseData(await apiClient.getMoonData(moonPhaseUrl));
+
+  React.useEffect(() => {
+    loadMoonData();
+  }, []);
+
   if (isLoading) {
     return <div>Loading ...</div>;
   }
+  
   const username = user.email ? user.email : user.username;
+
   return isAuthenticated ? (
     <Router>
       <main>
@@ -41,12 +66,6 @@ const App = () => {
               />{" "}
               Lunar Task
             </Navbar.Brand>
-
-            {/* <img src={user.picture} alt={user.name} /> */}
-            {/* <nav>
-          <img id="header-logo" src={logo} alt="Lunar Task Logo" />
-          <h1>Lunar Task</h1>
-        </nav> */}
             <Nav className="justify-content-end" activeKey="/home">
               <Nav.Item>
                 <Nav.Link active>
@@ -82,15 +101,15 @@ const App = () => {
           <Switch>
             <Route path="/week">
               <section>
-                <Week />
+                <Week data={moonPhaseData} />
               </section>
             </Route>
             <Route path="/calendar">
-              <Calendar />
+              <Calendar data={moonPhaseData} />
             </Route>
             <Route path="/">
               <section>
-                <Day />
+                <Day data={moonPhaseData} />
               </section>
             </Route>
           </Switch>

@@ -3,19 +3,22 @@ import * as React from "react";
 import dayjs from "dayjs";
 import CardGroup from "react-bootstrap/CardGroup";
 
+import { moonPhases } from "../MoonPhases";
+
 import DayOfWeek from "./DayOfWeek";
 
-const Week = () => {
+const Week = (data) => {
   const [startOfWeek, setStartOfWeek] = React.useState(
     dayjs().startOf("week").add(1, "day"),
   );
 
   const dates = [];
+  const svgs = [];
   for (let i = 0; i < 7; i++) {
     dates.push(startOfWeek.add(i, "day"));
+    svgs.push(data.data.phase[dates[i].date()].svg);
   }
-  //.format("ddd MMM D YYYY");
-
+  console.log(svgs);
   const changeWeek = (value) => {
     setStartOfWeek(startOfWeek.add(value, "week"));
   };
@@ -32,7 +35,12 @@ const Week = () => {
       </h2>
       <CardGroup>
         {dates.map((date, i) => (
-          <DayOfWeek date={date} key={i} />
+          <DayOfWeek
+            date={date}
+            key={i}
+            svg={svgs[i]}
+            data={data.data.phase[dates[i].date()].phaseName}
+          />
         ))}
       </CardGroup>
     </>
