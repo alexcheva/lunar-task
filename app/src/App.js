@@ -1,7 +1,12 @@
 import * as React from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
+
 import dayjs from "dayjs";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Navbar from "react-bootstrap/Navbar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import * as apiClient from "./apiClient";
@@ -43,48 +48,72 @@ const App = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-  console.log(moonPhaseData);
+  
+  const username = user.email ? user.email : user.username;
+
   return isAuthenticated ? (
     <Router>
-      <main className="App">
-        <div>
-          <img src={user.picture} alt={user.name} />
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-          <button onClick={() => logout({ returnTo: window.location.origin })}>
-            Log Out
-          </button>
-        </div>
-        <nav>
-          <img id="header-logo" src={logo} alt="Lunar Task Logo" />
-          <h1>Lunar Task</h1>
-          <ul>
-            <li key={1}>
-              <Link to="/">Day View</Link>
-            </li>
-            <li key={2}>
-              <Link to="/week">Week View</Link>
-            </li>
-            <li key={3}>
-              <Link to="/calendar">Calendar View</Link>
-            </li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route path="/week">
-            <section>
-              <Week data={moonPhaseData} />
-            </section>
-          </Route>
-          <Route path="/calendar">
-            <Calendar data={moonPhaseData} />
-          </Route>
-          <Route path="/">
-            <section>
-              <Day data={moonPhaseData} />
-            </section>
-          </Route>
-        </Switch>
+      <main>
+        <Container fluid>
+          <Navbar bg="dark" variant="dark">
+            <Navbar.Brand>
+              <img
+                alt="Lunar Task Logo"
+                src={logo}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+              />{" "}
+              Lunar Task
+            </Navbar.Brand>
+            <Nav className="justify-content-end" activeKey="/home">
+              <Nav.Item>
+                <Nav.Link active>
+                  <Link to="/">Day View</Link>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="link-1">
+                  <Link to="/week">Week View</Link>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="link-2">
+                  <Link to="/calendar">Calendar View</Link>
+                </Nav.Link>
+              </Nav.Item>
+
+              <NavDropdown title={username} id="nav-dropdown">
+                <NavDropdown.Item eventKey="3.1">Profile</NavDropdown.Item>
+                <NavDropdown.Item eventKey="3.2">Journal</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  eventKey="3.3"
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  Log Out
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar>
+        </Container>
+        <Container>
+          <Switch>
+            <Route path="/week">
+              <section>
+                <Week data={moonPhaseData} />
+              </section>
+            </Route>
+            <Route path="/calendar">
+              <Calendar data={moonPhaseData} />
+            </Route>
+            <Route path="/">
+              <section>
+                <Day data={moonPhaseData} />
+              </section>
+            </Route>
+          </Switch>
+        </Container>
       </main>
     </Router>
   ) : (
