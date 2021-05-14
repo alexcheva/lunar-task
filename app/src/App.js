@@ -10,9 +10,11 @@ import Day from "./components/Day";
 import Week from "./components/Week";
 import logo from "./moon-logo.svg";
 
-const month = dayjs().get("month");
+const month = dayjs().month();
 const year = dayjs().get("year");
-const moonPhaseUrl = `https://www.icalendar37.net/lunar/api/?lang=en&month=${month}&year=${year}&size=150&lightColor=rgb(255%2C255%2C210)&shadeColor=black&texturize=false&LDZ=1619852400`;
+const moonPhaseUrl = `https://www.icalendar37.net/lunar/api/?lang=en&month=${
+  month + 1
+}&year=${year}&size=150&lightColor=rgb(255%2C255%2C210)&shadeColor=black&texturize=false&LDZ=1619852400`;
 
 // export const getMoonPhases = async (url) => {
 //   const response = await fetch(url);
@@ -41,7 +43,7 @@ const App = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-
+  console.log(moonPhaseData);
   return isAuthenticated ? (
     <Router>
       <main className="App">
@@ -71,7 +73,7 @@ const App = () => {
         <Switch>
           <Route path="/week">
             <section>
-              <Week />
+              <Week data={moonPhaseData} />
             </section>
           </Route>
           <Route path="/calendar">
@@ -79,7 +81,7 @@ const App = () => {
           </Route>
           <Route path="/">
             <section>
-              <Day />
+              <Day data={moonPhaseData} />
             </section>
           </Route>
         </Switch>
