@@ -39,13 +39,15 @@ const Calendar = (data) => {
   };
   return (
     <section>
-      <button onClick={() => changeMonthValue(-1)}>
-        <i className="bi bi-arrow-left-circle"></i>
-      </button>{" "}
-      {month.format("MMMM YYYY")}{" "}
-      <button onClick={() => changeMonthValue(1)}>
-        <i className="bi bi-arrow-right-circle"></i>
-      </button>
+      <h2>
+        <button onClick={() => changeMonthValue(-1)}>
+          <i className="bi bi-arrow-left-circle"></i>
+        </button>{" "}
+        {month.format("MMMM YYYY")}{" "}
+        <button onClick={() => changeMonthValue(1)}>
+          <i className="bi bi-arrow-right-circle"></i>
+        </button>
+      </h2>
       <CardGroup>
         {dates.map((date, i) => (
           <DayOfMonth
