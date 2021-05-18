@@ -28,22 +28,22 @@ const moonPhaseUrl = `https://www.icalendar37.net/lunar/api/?lang=en&month=${
 //   return data;
 // };
 const calculateMoonPhase = (num) => {
-  const decimal = Math.floor(num) / 100;
-  if (num === 0) {
+  const decimal = Math.round(num);
+  if (decimal === 0) {
     return "New Moon";
-  } else if (num > 0 && num < 0.25) {
+  } else if (decimal > 0 && decimal < 25) {
     return "Waxing Crescent";
-  } else if (num === 0.25) {
+  } else if (decimal === 50) {
     return "First Quarter";
-  } else if (num > 0.25 && num < 0.5) {
+  } else if (decimal > 25 && decimal < 50) {
     return "Waxing Gibbous";
-  } else if (num === 0.5) {
+  } else if (decimal === 100) {
     return "Full Moon";
-  } else if (num > 0.5 && num < 0.75) {
+  } else if (decimal > 50 && decimal < 75) {
     return "Waning Gibbous";
-  } else if (num === 0.75) {
+  } else if (decimal === 75) {
     return "Last Quarter";
-  } else if (num > 0.75 && num < 1) {
+  } else if (decimal > 75 && decimal < 100) {
     return "Waning Crescent";
   }
 };
