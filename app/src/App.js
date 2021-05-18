@@ -48,76 +48,77 @@ const App = () => {
     return <div>Loading ...</div>;
   }
 
-  const username = user.email ? user.email : user.username;
+  if (isAuthenticated) {
+    const username = user.email ? user.email : user.username;
+    return (
+      <Router>
+        <main>
+          <Container fluid>
+            <Navbar bg="dark" variant="dark">
+              <Navbar.Brand>
+                <img
+                  alt="Lunar Task Logo"
+                  src={logo}
+                  width="30"
+                  height="30"
+                  className="d-inline-block align-top"
+                />{" "}
+                Lunar Task
+              </Navbar.Brand>
+              <Nav className="justify-content-end" activeKey="/home">
+                <Nav.Item>
+                  <Nav.Link active>
+                    <Link to="/">Day View</Link>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="link-1">
+                    <Link to="/week">Week View</Link>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="link-2">
+                    <Link to="/calendar">Calendar View</Link>
+                  </Nav.Link>
+                </Nav.Item>
 
-  return isAuthenticated ? (
-    <Router>
-      <main>
-        <Container fluid>
-          <Navbar bg="dark" variant="dark">
-            <Navbar.Brand>
-              <img
-                alt="Lunar Task Logo"
-                src={logo}
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
-              />{" "}
-              Lunar Task
-            </Navbar.Brand>
-            <Nav className="justify-content-end" activeKey="/home">
-              <Nav.Item>
-                <Nav.Link active>
-                  <Link to="/">Day View</Link>
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="link-1">
-                  <Link to="/week">Week View</Link>
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="link-2">
-                  <Link to="/calendar">Calendar View</Link>
-                </Nav.Link>
-              </Nav.Item>
-
-              <NavDropdown title={username} id="nav-dropdown">
-                <NavDropdown.Item eventKey="3.1">Profile</NavDropdown.Item>
-                <NavDropdown.Item eventKey="3.2">Journal</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item
-                  eventKey="3.3"
-                  onClick={() => logout({ returnTo: window.location.origin })}
-                >
-                  Log Out
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar>
-        </Container>
-        <Container>
-          <Switch>
-            <Route path="/week">
-              <section>
-                <Week data={moonPhaseData} />
-              </section>
-            </Route>
-            <Route path="/calendar">
-              <Calendar data={moonPhaseData} />
-            </Route>
-            <Route path="/">
-              <section>
-                <Day data={moonPhaseData} />
-              </section>
-            </Route>
-          </Switch>
-        </Container>
-      </main>
-    </Router>
-  ) : (
-    <button onClick={() => loginWithRedirect()}>Log In</button>
-  );
+                <NavDropdown title={username} id="nav-dropdown">
+                  <NavDropdown.Item eventKey="3.1">Profile</NavDropdown.Item>
+                  <NavDropdown.Item eventKey="3.2">Journal</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item
+                    eventKey="3.3"
+                    onClick={() => logout({ returnTo: window.location.origin })}
+                  >
+                    Log Out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </Navbar>
+          </Container>
+          <Container>
+            <Switch>
+              <Route path="/week">
+                <section>
+                  <Week data={moonPhaseData} />
+                </section>
+              </Route>
+              <Route path="/calendar">
+                <Calendar data={moonPhaseData} />
+              </Route>
+              <Route path="/">
+                <section>
+                  <Day data={moonPhaseData} />
+                </section>
+              </Route>
+            </Switch>
+          </Container>
+        </main>
+      </Router>
+    );
+  } else {
+    return <button onClick={() => loginWithRedirect()}>Log In</button>;
+  }
 };
 
 export default App;

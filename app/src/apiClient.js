@@ -1,8 +1,14 @@
-export const getTasks = async (date) => {
-  const response = await fetch("/api/tasks?date=2021-05-14");
-  return response.json();
+export const getTasks = async (startDate, endDate) => {
+  if (!endDate) {
+    const response = await fetch(`/api/tasks?startDate=${startDate}`);
+    return response.json();
+  } else {
+    const response = await fetch(
+      `/api/tasks?startDate=${startDate}&endDate=${endDate}`,
+    );
+    return response.json();
+  }
 };
-
 //get tasks by week
 //startDate endDate
 export const getMoonData = async (url) => {

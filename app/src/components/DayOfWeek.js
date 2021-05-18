@@ -7,18 +7,13 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
 
-const DayOfWeek = ({ date, svg, data }) => {
-  const [tasks, setTasks] = React.useState([]);
-
-  const loadTasks = async () => setTasks(await apiClient.getTasks());
-
-  React.useEffect(() => {
-    loadTasks();
-  }, []);
-
+const DayOfWeek = ({ date, svg, data, tasks }) => {
   return (
     <Card>
-      <div className="svg" dangerouslySetInnerHTML={{ __html: svg }}></div>
+      <div
+        className="card-img-top mx-auto d-block"
+        dangerouslySetInnerHTML={{ __html: svg }}
+      ></div>
       <Card.Body>
         <Card.Title>{date.format("ddd MMM D YYYY")}</Card.Title>
         <Card.Text>
@@ -31,7 +26,7 @@ const DayOfWeek = ({ date, svg, data }) => {
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroupItem>
-          <AddTask loadTasks={loadTasks} />
+          <AddTask />
         </ListGroupItem>
       </ListGroup>
       <TaskList tasks={tasks} />
@@ -41,13 +36,13 @@ const DayOfWeek = ({ date, svg, data }) => {
 
 const TaskList = ({ tasks }) => (
   <ListGroup className="list-group-flush">
-    {tasks.map(({ id, name }) => (
+    {tasks.map(({ id, task }) => (
       <ListGroupItem key={id}>
-        {name}
+        {task}
         <button>
           <i className="bi bi-pencil-square"></i>
         </button>
-        <button>
+        <button variant="danger">
           <i className="bi bi-trash-fill"></i>
         </button>
       </ListGroupItem>
@@ -70,7 +65,7 @@ const AddTask = ({ loadTasks }) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form bg="dark" text="light" onSubmit={onSubmit}>
       <label>
         New task:{" "}
         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />

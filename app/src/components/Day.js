@@ -13,16 +13,16 @@ const Day = (data) => {
   const [date, setDate] = React.useState(today);
   const [tasks, setTasks] = React.useState([]);
 
-  const loadTasks = async () => setTasks(await apiClient.getTasks(date));
+  const loadTasks = async () =>
+    setTasks(await apiClient.getTasks(date.format("YYYY-MM-DD")));
 
   React.useEffect(() => {
     loadTasks();
-  }, []);
+  }, [date]);
 
   const changeDateValue = (addValue) => {
     setDate(date.add(addValue, "day"));
   };
-  // console.log(data);
   const currentSvg = `<svg width="150" height="150" viewBox="0 0 100 100"><g><circle cx="50" cy="50" r="49" stroke="none"  fill="black"/><path d="M 50 1 A 49,49 0 0,1 49,99 A -44.1,49 0 0,1 50,1" stroke-width="0" stroke="none" fill="rgb(255,255,210)" /><a xlink:href="https://www.icalendar37.net/lunar/app/" rel="noopener noreferrer" target="_blank"><circle cx="50" cy="50" r="49" style="pointer-events:all;cursor:pointer" stroke-width="0"   fill="transparent" /></a></g></svg>`;
   const regex = /\\/g;
   const svg = data.data.phase[date.date()].svg;
@@ -32,60 +32,11 @@ const Day = (data) => {
     '<a xlink:href="https://www.icalendar37.net/lunar/app/" rel="noopener noreferrer" target="_blank">';
   svg.replace(link, "");
   svg.replace('style="pointer-events:all;cursor:pointer" ', "");
-  console.log(svg);
+  // console.log(svg);
   return (
-    <Card style={{ width: "18rem" }}>
-      {/*<Card.Img
-        variant="top"
-        id="image"
-        src="https://www.icalendar37.net/lunar/api/i.png"
-      />*/}
-      <div text-align="center">
-        <svg
-          className="card-img-top"
-          width="50%"
-          height="50%"
-          margin="auto"
-          viewBox="0 0 100 100"
-        >
-          <defs>
-            <pattern
-              id="image11"
-              x="0"
-              y="0"
-              patternUnits="userSpaceOnUse"
-              height="100"
-              width="100"
-            >
-              <image
-                x="0"
-                y="0"
-                height="100"
-                width="100"
-                href="https://www.icalendar37.net/lunar/api/i.png"
-              ></image>
-            </pattern>
-          </defs>
-          <g>
-            <circle cx="50" cy="50" r="49" stroke="none" fill="black"></circle>
-            <path
-              d="M 50 1 A 49,49 0 1,0 49,99 A -16.66,49 0 1,0 50,1"
-              strokeWidth="0"
-              stroke="none"
-              fill="white"
-            ></path>
-            <circle
-              cx="50"
-              cy="50"
-              r="49"
-              strokeWidth="2"
-              fill="url(#image11)"
-            ></circle>
-          </g>
-        </svg>{" "}
-      </div>
+    <Card>
       <div
-        className="svg"
+        className="card-img-top mx-auto d-block"
         dangerouslySetInnerHTML={{
           __html: svg
             .replace(link, "")
@@ -112,10 +63,11 @@ const Day = (data) => {
           </defs>
           <g>`,
             )
-            .replace(' fill="transparent" ', 'fill="url(#image11)"'),
+            .replace(' fill="transparent" ', 'fill="url(#image11)"')
+            .replace("rgb(255,255,210)", "white"),
         }}
       ></div>
-
+      {/* bg="dark" text="light" */}
       <Card.Body>
         <Card.Title>
           <button onClick={() => changeDateValue(-1)}>
@@ -150,10 +102,10 @@ const TaskList = ({ tasks }) => (
     {tasks.map(({ id, task }) => (
       <ListGroupItem key={id}>
         {task}
-        <button>
+        <button variant="warning">
           <i className="bi bi-pencil-square"></i>
         </button>
-        <button>
+        <button variant="danger">
           <i className="bi bi-trash-fill"></i>
         </button>
       </ListGroupItem>

@@ -99,6 +99,12 @@ img#header-logo {
 .container-fluid {
   padding: 0;
 }
+a {
+  color: #e54fff;
+}
+a:hover {
+  color: #e48df3;
+}
 /* nav {
   text-align: end;
 }

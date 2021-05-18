@@ -9,26 +9,29 @@ import CardGroup from "react-bootstrap/CardGroup";
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
 
-const Calendar = (data) => {
+const Calendar = ({ data }) => {
   const [month, setMonth] = React.useState(dayjs());
   const [daysInMonth, setDaysInMonth] = React.useState(month.daysInMonth());
-  // const [moonData, setMoonData] = React.useState({});
-
-  // const loadMoonData = async () => setMoonData(await apiClient.getMoonData());
-
-  // React.useEffect(() => {
-  //   setMoonData(data);
-  //   loadMoonData().then((data) => setMoonData(data));
-  // }, []);
 
   const dates = [];
   const svgs = [];
   for (let i = 1; i <= daysInMonth; i++) {
     dates.push(month.date(i));
-    svgs.push(data.data.phase[dates[i - 1].date()].svg);
+    svgs.push(data.phase[dates[i - 1].date()].svg);
   }
-  console.log(data.data.phase[1]);
-
+  console.log(data.phase[1]);
+  const first_day_week_sunday = false;
+  let inc = 0;
+  if (first_day_week_sunday) {
+    inc = 1;
+    data.nameDay.unshift(data.nameDay.pop());
+  }
+  const empty_initial_boxes = Number(data.phase[1].dayWeek) + inc;
+  console.log(empty_initial_boxes);
+  const number_days_month = Number(data.daysMonth);
+  const total_boxes =
+    Math.ceil((empty_initial_boxes + number_days_month) / 7) * 7;
+  console.log(total_boxes);
   //link to days
   //pass in the date props
   //make different routes to the specific days
@@ -37,6 +40,11 @@ const Calendar = (data) => {
     setMonth(month.add(addValue, "month"));
     setDaysInMonth(month.daysInMonth());
   };
+  const emptyInitialCards = [];
+  for (let i = 0; i < empty_initial_boxes; i++) {
+    emptyInitialCards.push(`<Card key={0${i}}></Card>`);
+  }
+  console.log(emptyInitialCards);
   return (
     <section>
       <h2>
@@ -49,21 +57,20 @@ const Calendar = (data) => {
         </button>
       </h2>
       <CardGroup>
+        {emptyInitialCards.join("")}
         {dates.map((date, i) => (
           <DayOfMonth
             date={date}
             key={i}
-            data={data.data.phase[dates[i].date()].phaseName}
-            svg={data.data.phase[dates[i].date()].svg}
+            data={data.phase[dates[i].date()].phaseName}
+            svg={data.phase[dates[i].date()].svg}
           />
         ))}
       </CardGroup>
     </section>
   );
 };
-{
-  /* <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" /> */
-}
+
 const DayOfMonth = ({ date, data, svg }) => {
   return (
     <Card>

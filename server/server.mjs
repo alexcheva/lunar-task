@@ -9,9 +9,16 @@ const port = process.env.PORT || 4000;
 const tasks = express.Router();
 
 tasks.get("/", async (request, response) => {
-  const date = request.query.date;
+  const startDate = request.query.startDate;
+  const endDate = request.query.endDate;
   //condition weather request query by date or by week
-  const tasks = await db.getTasks(date);
+  let tasks = [];
+  if (!endDate) {
+    tasks = await db.getTasks(startDate);
+  } else {
+    tasks = await db.getTasks(startDate, endDate);
+  }
+  console.log({ tasks });
   response.json(tasks);
 });
 

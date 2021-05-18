@@ -3,13 +3,19 @@ import pgp from "pg-promise";
 
 const db = initDb();
 
-export const getTasks = async (date) => {
-  await db.any("SELECT * FROM tasks WHERE date=$1", [date]);
+export const getTasks = async (startDate, endDate) => {
+  if (!endDate) {
+    return db.any("SELECT * FROM tasks WHERE date=$1", [startDate]);
+  } else {
+    return db.any("SELECT * FROM tasks WHERE date BETWEEN $1 AND $2", [
+      startDate,
+      endDate,
+    ]);
+  }
   //week get dates[0] dates[6] and query the range
   //getTasks(new Date(2021, 4, 12)).then((result) => console.log(result));
 };
 //get tasks by week
-
 export const addTask = async (task) => {
   const today = new Date();
   const user_id = 1;

@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import CardGroup from "react-bootstrap/CardGroup";
 
 import { moonPhases } from "../MoonPhases";
+import * as apiClient from "../apiClient";
 
 import DayOfWeek from "./DayOfWeek";
 
@@ -11,14 +12,26 @@ const Week = (data) => {
   const [startOfWeek, setStartOfWeek] = React.useState(
     dayjs().startOf("week").add(1, "day"),
   );
-
+  const [dayTasks, setDayTasks] = React.useState([]);
   const dates = [];
+
   const svgs = [];
   for (let i = 0; i < 7; i++) {
     dates.push(startOfWeek.add(i, "day"));
     svgs.push(data.data.phase[dates[i].date()].svg);
   }
-  console.log(svgs);
+  const loadTasks = async () =>
+    setDayTasks(
+      await apiClient.getTasks(
+        dates[0].format("YYYY-MM-DD"),
+        dates[6].format("YYYY-MM-DD"),
+      ),
+    );
+  React.useEffect(() => {
+    loadTasks();
+  }, [startOfWeek]);
+  console.log(dayTasks);
+  //filter dates from
   const changeWeek = (value) => {
     setStartOfWeek(startOfWeek.add(value, "week"));
   };
@@ -34,14 +47,22 @@ const Week = (data) => {
         </button>
       </h2>
       <CardGroup>
-        {dates.map((date, i) => (
-          <DayOfWeek
-            date={date}
-            key={i}
-            svg={svgs[i]}
-            data={data.data.phase[dates[i].date()].phaseName}
-          />
-        ))}
+        {dates.map((date, i) => {
+          const tasksOfTheDay = dayTasks.filter(
+            (task) =>
+              dayjs(task.date).format("YYYY-MM-DD") ===
+              date.format("YYYY-MM-DD"),
+          );
+          return (
+            <DayOfWeek
+              date={date}
+              tasks={tasksOfTheDay}
+              key={i}
+              svg={svgs[i]}
+              data={data.data.phase[dates[i].date()].phaseName}
+            />
+          );
+        })}
       </CardGroup>
     </>
   );
