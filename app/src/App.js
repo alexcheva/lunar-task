@@ -13,6 +13,7 @@ import Calendar from "./components/Calendar";
 import Day from "./components/Day";
 import Week from "./components/Week";
 import logo from "./moon-logo.svg";
+import moonImg from "./moon.png";
 
 const month = dayjs().month();
 const year = dayjs().get("year");
@@ -26,9 +27,29 @@ const moonPhaseUrl = `https://www.icalendar37.net/lunar/api/?lang=en&month=${
 //   console.log(data);
 //   return data;
 // };
-
+const calculateMoonPhase = (num) => {
+  const decimal = Math.floor(num) / 100;
+  if (num === 0) {
+    return "New Moon";
+  } else if (num > 0 && num < 0.25) {
+    return "Waxing Crescent";
+  } else if (num === 0.25) {
+    return "First Quarter";
+  } else if (num > 0.25 && num < 0.5) {
+    return "Waxing Gibbous";
+  } else if (num === 0.5) {
+    return "Full Moon";
+  } else if (num > 0.5 && num < 0.75) {
+    return "Waning Gibbous";
+  } else if (num === 0.75) {
+    return "Last Quarter";
+  } else if (num > 0.75 && num < 1) {
+    return "Waning Crescent";
+  }
+};
 const App = () => {
   const [moonPhaseData, setMoonPhaseData] = React.useState({});
+
   const {
     user,
     isAuthenticated,
@@ -37,9 +58,50 @@ const App = () => {
     logout,
   } = useAuth0();
 
-  const loadMoonData = async () =>
-    setMoonPhaseData(await apiClient.getMoonData(moonPhaseUrl));
+  const loadMoonData = async () => {
+    const moonData = await apiClient.getMoonData(moonPhaseUrl);
+    console.log(moonData);
+    const formattedData = Object.keys(moonData.phase).map((phaseNumber) => {
+      const phase = moonData.phase[phaseNumber];
+      return {
+        ...phase,
+        svg: phase.svg
+          .replace(
+            '<a xlink:href="https://www.icalendar37.net/lunar/app/" rel="noopener noreferrer" target="_blank">',
+            "",
+          )
+          .replace('style="pointer-events:all;cursor:pointer" ', "")
+          .replace(
+            "<g>",
+            `<defs>
+            <pattern
+              id="image11"
+              x="0"
+              y="0"
+              patternUnits="userSpaceOnUse"
+              height="100"
+              width="100"
+            >
+              <image
+                x="0"
+                y="0"
+                height="100"
+                width="100"
+                href="${moonImg}"
+              ></image>
+            </pattern>
+          </defs>
+          <g>`,
+          )
+          .replace(' fill="transparent" ', 'fill="url(#image11)"')
+          .replace("rgb(255,255,210)", "white"),
+        AlexPhase: calculateMoonPhase(phase.lighting),
+      };
+    });
 
+    console.log({ formattedData });
+    setMoonPhaseData(formattedData);
+  };
   React.useEffect(() => {
     loadMoonData();
   }, []);

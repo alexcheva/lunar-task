@@ -8,17 +8,14 @@ import * as apiClient from "../apiClient";
 
 import DayOfWeek from "./DayOfWeek";
 
-const Week = (data) => {
+const Week = ({ data }) => {
   const [startOfWeek, setStartOfWeek] = React.useState(
     dayjs().startOf("week").add(1, "day"),
   );
   const [dayTasks, setDayTasks] = React.useState([]);
   const dates = [];
-
-  const svgs = [];
   for (let i = 0; i < 7; i++) {
     dates.push(startOfWeek.add(i, "day"));
-    svgs.push(data.data.phase[dates[i].date()].svg);
   }
   const loadTasks = async () =>
     setDayTasks(
@@ -58,8 +55,8 @@ const Week = (data) => {
               date={date}
               tasks={tasksOfTheDay}
               key={i}
-              svg={svgs[i]}
-              data={data.data.phase[dates[i].date()].phaseName}
+              svg={data[dates[i].date()].svg}
+              data={data[dates[i].date()].phaseName}
             />
           );
         })}

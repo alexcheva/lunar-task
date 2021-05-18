@@ -27,3 +27,11 @@ export const moonPhases = {
   },
 };
 // export default moonPhases;
+// 0 – new moon.
+// 0-0.25 – waxing crescent.
+// 0.25 – first quarter.
+// 0.25-0.5 – waxing gibbous.
+// 0.5 – full moon.
+// 0.5-0.75 – waning gibbous.
+// 0.75 – last quarter.
+// 0.75 -1 – waning crescent.
