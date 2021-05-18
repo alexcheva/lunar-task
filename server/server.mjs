@@ -24,8 +24,8 @@ tasks.get("/", async (request, response) => {
 
 tasks.use(express.json());
 tasks.post("/", async (request, response) => {
-  const { task } = request.body;
-  const entry = await db.addTask(task);
+  const { task, date } = request.body;
+  const entry = await db.addTask(task, date);
   console.log({ entry });
   response.status(201).json(entry);
 });

@@ -16,14 +16,14 @@ export const getTasks = async (startDate, endDate) => {
   //getTasks(new Date(2021, 4, 12)).then((result) => console.log(result));
 };
 //get tasks by week
-export const addTask = async (task) => {
-  const today = new Date();
+export const addTask = async (task, date) => {
+  const day = new Date(date);
   const user_id = 1;
 
   return (
     await db.any(
       "INSERT INTO tasks(task,date,user_id) VALUES($1,$2,$3) RETURNING id, task, date, user_id",
-      [task, today, user_id],
+      [task, day, user_id],
     )
   )[0];
 };

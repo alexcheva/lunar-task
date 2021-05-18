@@ -8,6 +8,14 @@ import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
 
 const DayOfWeek = ({ date, svg, data, tasks }) => {
+  const [dayTasks, setDayTasks] = React.useState([]);
+
+  const loadDayTasks = async () =>
+    setDayTasks(await apiClient.getTasks(date.format("YYYY-MM-DD")));
+
+  React.useEffect(() => {
+    setDayTasks(tasks);
+  }, [tasks]);
   return (
     <Card>
       <div
@@ -26,10 +34,10 @@ const DayOfWeek = ({ date, svg, data, tasks }) => {
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroupItem>
-          <AddTask />
+          <AddTask loadDayTasks={loadDayTasks} date={date} />
         </ListGroupItem>
       </ListGroup>
-      <TaskList tasks={tasks} />
+      <TaskList tasks={dayTasks} />
     </Card>
   );
 };
@@ -50,7 +58,7 @@ const TaskList = ({ tasks }) => (
   </ListGroup>
 );
 
-const AddTask = ({ loadTasks }) => {
+const AddTask = ({ loadDayTasks, date }) => {
   const [task, setTask] = React.useState("");
 
   const canAdd = task !== "";
@@ -58,8 +66,8 @@ const AddTask = ({ loadTasks }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await apiClient.addTask(task);
-      loadTasks();
+      await apiClient.addTask(task, date);
+      loadDayTasks();
       setTask("");
     }
   };

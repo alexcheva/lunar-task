@@ -16,13 +16,13 @@ export const getMoonData = async (url) => {
   return response.json();
 };
 
-export const addTask = async (task) => {
+export const addTask = async (task, date) => {
   const response = await fetch("/api/tasks", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ task }),
+    body: JSON.stringify({ task, date }),
   });
   return response.json();
 };
