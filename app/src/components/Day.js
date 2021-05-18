@@ -89,7 +89,7 @@ const Day = (data) => {
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroupItem>
-          <AddTask loadTasks={loadTasks} />
+          <AddTask loadTasks={loadTasks} date={date} />
         </ListGroupItem>
       </ListGroup>
       <TaskList tasks={tasks} />
@@ -113,7 +113,7 @@ const TaskList = ({ tasks }) => (
   </ListGroup>
 );
 
-const AddTask = ({ loadTasks }) => {
+const AddTask = ({ loadTasks, date }) => {
   const [task, setTask] = React.useState("");
 
   const canAdd = task !== "";
@@ -121,7 +121,7 @@ const AddTask = ({ loadTasks }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await apiClient.addTask(task);
+      await apiClient.addTask(task, date);
       loadTasks();
       setTask("");
     }
