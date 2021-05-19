@@ -20,7 +20,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
-CREATE ROLE tpl2_2021h1;
 --
 -- Name: journal; Type: TABLE; Schema: public; Owner: tpl2_2021h1
 --

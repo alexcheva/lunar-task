@@ -8,24 +8,57 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
 //rename data to props
-const Day = ({ data }) => {
+const Day = ({ initialData }) => {
   const today = dayjs();
   const [date, setDate] = React.useState(today);
   const [tasks, setTasks] = React.useState([]);
+  const [data, setData] = React.useState(initialData);
+  console.log(data);
 
   const loadTasks = async () =>
     setTasks(await apiClient.getTasks(date.format("YYYY-MM-DD")));
 
+  const loadMoonData = async (month) => {
+    const formattedData = await apiClient.getMoonData(
+      month,
+      dayjs().get("year"),
+    );
+    setData(formattedData);
+  };
+
+  const changeDateValue = (addValue) => {
+    let newDate = date.add(addValue, "day");
+    console.log({ newDate }, newDate.month);
+    if (newDate.month() !== date.month()) {
+      debugger;
+      console.log("I'm here!!!");
+      loadMoonData(newDate.month()).then(() => setDate(newDate));
+      //  setDate(newDate);
+    } else {
+      setDate(newDate);
+    }
+  };
+
+  console.log("Date", date.date() - 1);
+  console.log(date);
+  console.log(data);
   React.useEffect(() => {
     loadTasks();
   }, [date]);
+  React.useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
 
-  const changeDateValue = (addValue) => {
-    setDate(date.add(addValue, "day"));
-  };
-  console.log(date.date());
-  const regex = /\\/g;
-  const svg = data[date.date()].svg;
+  if (!data) {
+    return "Loading";
+  }
+  // const svg = data[date.date() - 1].svg;
+  const dayData = data?.[date.date() - 1] || {};
+  const svg = dayData.svg;
+
+  // console.log(data[date.day() - 1]);
+  // console.log(data[date.day() - 1].AlexPhase);
+  // console.log(moonPhases[data[date.day() - 1].AlexPhase]);
 
   return (
     <Card>
@@ -47,12 +80,12 @@ const Day = ({ data }) => {
           </button>
         </Card.Title>
         <Card.Text>
-          {data[date.date()].phaseName}
+          {dayData.AlexPhase}
           {/*data.data.phase[date.date()].npWidget*/}
           <br />
-          {moonPhases[data[date.date()].phaseName].action}
+          {moonPhases[dayData.AlexPhase]?.action}
           <br />
-          {moonPhases[data[date.date()].phaseName].desc}
+          {moonPhases[dayData.AlexPhase]?.desc}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">

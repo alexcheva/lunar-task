@@ -1,7 +1,5 @@
 import * as React from "react";
 
-// import dayGridPlugin from "@fullcalendar/daygrid";
-// import FullCalendar from "@fullcalendar/react";
 import dayjs from "dayjs";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
@@ -14,24 +12,23 @@ const Calendar = ({ data }) => {
   const [daysInMonth, setDaysInMonth] = React.useState(month.daysInMonth());
 
   const dates = [];
-  const svgs = [];
+
   for (let i = 1; i <= daysInMonth; i++) {
     dates.push(month.date(i));
-    svgs.push(data.phase[dates[i - 1].date()].svg);
   }
-  console.log(data.phase[1]);
-  const first_day_week_sunday = false;
-  let inc = 0;
-  if (first_day_week_sunday) {
-    inc = 1;
-    data.nameDay.unshift(data.nameDay.pop());
-  }
-  const empty_initial_boxes = Number(data.phase[1].dayWeek) + inc;
-  console.log(empty_initial_boxes);
-  const number_days_month = Number(data.daysMonth);
-  const total_boxes =
-    Math.ceil((empty_initial_boxes + number_days_month) / 7) * 7;
-  console.log(total_boxes);
+
+  // const first_day_week_sunday = false;
+  // let inc = 0;
+  // if (first_day_week_sunday) {
+  //   inc = 1;
+  //   data.nameDay.unshift(data.nameDay.pop());
+  // }
+  // const empty_initial_boxes = Number(data[1].dayWeek) + inc;
+  // console.log(empty_initial_boxes);
+  // const number_days_month = Number(data.daysMonth);
+  // const total_boxes =
+  //   Math.ceil((empty_initial_boxes + number_days_month) / 7) * 7;
+  // console.log(total_boxes);
   //link to days
   //pass in the date props
   //make different routes to the specific days
@@ -40,11 +37,11 @@ const Calendar = ({ data }) => {
     setMonth(month.add(addValue, "month"));
     setDaysInMonth(month.daysInMonth());
   };
-  const emptyInitialCards = [];
-  for (let i = 0; i < empty_initial_boxes; i++) {
-    emptyInitialCards.push(`<Card key={0${i}}></Card>`);
-  }
-  console.log(emptyInitialCards);
+  // const emptyInitialCards = [];
+  // for (let i = 0; i < empty_initial_boxes; i++) {
+  //   emptyInitialCards.push(`<Card key={0${i}}></Card>`);
+  // }
+  // console.log(emptyInitialCards);
   return (
     <section>
       <h2>
@@ -57,13 +54,13 @@ const Calendar = ({ data }) => {
         </button>
       </h2>
       <CardGroup>
-        {emptyInitialCards.join("")}
+        {/* {emptyInitialCards.join("")} */}
         {dates.map((date, i) => (
           <DayOfMonth
             date={date}
             key={i}
-            data={data.phase[dates[i].date()].phaseName}
-            svg={data.phase[dates[i].date()].svg}
+            data={data[date.date()].phaseName}
+            svg={data[date.date()].svg}
           />
         ))}
       </CardGroup>

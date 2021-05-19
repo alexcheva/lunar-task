@@ -55,8 +55,8 @@ const Week = ({ data }) => {
               date={date}
               tasks={tasksOfTheDay}
               key={i}
-              svg={data[dates[i].date()].svg}
-              data={data[dates[i].date()].phaseName}
+              svg={data[dates[i].date() - 1].svg}
+              data={data[dates[i].date() - 1].phaseName}
             />
           );
         })}

@@ -1,3 +1,6 @@
+import { calculateMoonPhase } from "./MoonPhases";
+import moonImg from "./moon.png";
+
 export const getTasks = async (startDate, endDate) => {
   if (!endDate) {
     const response = await fetch(`/api/tasks?startDate=${startDate}`);
@@ -11,9 +14,51 @@ export const getTasks = async (startDate, endDate) => {
 };
 //get tasks by week
 //startDate endDate
-export const getMoonData = async (url) => {
-  const response = await fetch(url);
-  return response.json();
+export const getMoonData = async (month, year) => {
+  const url = `https://www.icalendar37.net/lunar/api/?lang=en&month=${
+    month + 1
+  }&year=${year}&size=150&lightColor=rgb(255%2C255%2C210)&shadeColor=black&texturize=false&LDZ=1619852400`;
+  const moonDataFetch = await fetch(url);
+  const moonData = await moonDataFetch.json();
+  const formattedData = Object.keys(moonData.phase).map((phaseNumber) => {
+    const phase = moonData.phase[phaseNumber];
+    return {
+      ...phase,
+      svg: phase.svg
+        .replace(
+          '<a xlink:href="https://www.icalendar37.net/lunar/app/" rel="noopener noreferrer" target="_blank">',
+          "",
+        )
+        .replace('style="pointer-events:all;cursor:pointer" ', "")
+        .replace(
+          "<g>",
+          `<defs>
+          <pattern
+            id="image11"
+            x="0"
+            y="0"
+            patternUnits="userSpaceOnUse"
+            height="100"
+            width="100"
+          >
+            <image
+              x="0"
+              y="0"
+              height="100"
+              width="100"
+              href="${moonImg}"
+            ></image>
+          </pattern>
+        </defs>
+        <g>`,
+        )
+        .replace(' fill="transparent" ', 'fill="url(#image11)"')
+        .replace("rgb(255,255,210)", "white"),
+      AlexPhase: calculateMoonPhase(phase.lighting),
+    };
+  });
+  //return response.json();
+  return formattedData;
 };
 
 export const addTask = async (task, date) => {
