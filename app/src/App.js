@@ -102,7 +102,7 @@ const App = () => {
             <Switch>
               <Route path="/week">
                 <section>
-                  <Week data={moonPhaseData} />
+                  <Week initialData={moonPhaseData} />
                 </section>
               </Route>
               <Route path="/calendar">

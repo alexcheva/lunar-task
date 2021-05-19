@@ -28,15 +28,10 @@ const Day = ({ initialData }) => {
 
   const changeDateValue = (addValue) => {
     let newDate = date.add(addValue, "day");
-    console.log({ newDate }, newDate.month);
     if (newDate.month() !== date.month()) {
-      debugger;
-      console.log("I'm here!!!");
-      loadMoonData(newDate.month()).then(() => setDate(newDate));
-      //  setDate(newDate);
-    } else {
-      setDate(newDate);
+      loadMoonData(newDate.month());
     }
+    setDate(newDate);
   };
 
   console.log("Date", date.date() - 1);
@@ -52,13 +47,9 @@ const Day = ({ initialData }) => {
   if (!data) {
     return "Loading";
   }
-  // const svg = data[date.date() - 1].svg;
+
   const dayData = data?.[date.date() - 1] || {};
   const svg = dayData.svg;
-
-  // console.log(data[date.day() - 1]);
-  // console.log(data[date.day() - 1].AlexPhase);
-  // console.log(moonPhases[data[date.day() - 1].AlexPhase]);
 
   return (
     <Card>
@@ -81,7 +72,6 @@ const Day = ({ initialData }) => {
         </Card.Title>
         <Card.Text>
           {dayData.AlexPhase}
-          {/*data.data.phase[date.date()].npWidget*/}
           <br />
           {moonPhases[dayData.AlexPhase]?.action}
           <br />

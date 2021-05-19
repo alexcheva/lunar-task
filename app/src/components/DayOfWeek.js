@@ -27,9 +27,9 @@ const DayOfWeek = ({ date, svg, data, tasks }) => {
         <Card.Text>
           {data}
           <br />
-          {moonPhases[data[date.day()].AlexPhase].action}
+          {moonPhases[data]?.action}
           <br />
-          {moonPhases[data[date.day()].AlexPhase].desc}
+          {moonPhases[data]?.desc}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
