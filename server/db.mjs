@@ -33,15 +33,15 @@ export const getUser = (email) => {
 };
 //getUser("a.lukinicheva@gmail.com").then((r) => console.log(r));
 export const addUser = async (email) => {
-  const day = new Date(date);
+  const day = new Date();
   return (
     await db.any(
-      "INSERT INTO users(account,date_joined) VALUES($1) RETURNING id",
+      "INSERT INTO users(account,date_joined) VALUES($1,$2) RETURNING id",
       [email, day],
     )
   )[0];
 };
-
+addUser("a.lukinicheva@gmail.com");
 export const deleteTask = async (id) => {
   return (await db.any("DELETE FROM tasks WHERE id = $1;", [true][id]))[0];
 };
