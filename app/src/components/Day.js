@@ -13,7 +13,6 @@ const Day = ({ initialData }) => {
   const [date, setDate] = React.useState(today);
   const [tasks, setTasks] = React.useState([]);
   const [data, setData] = React.useState(initialData);
-  console.log(data);
 
   const loadTasks = async () =>
     setTasks(await apiClient.getTasks(date.format("YYYY-MM-DD")));
@@ -33,10 +32,6 @@ const Day = ({ initialData }) => {
     }
     setDate(newDate);
   };
-
-  console.log("Date", date.date() - 1);
-  console.log(date);
-  console.log(data);
   React.useEffect(() => {
     loadTasks();
   }, [date]);

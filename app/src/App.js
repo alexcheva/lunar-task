@@ -15,13 +15,6 @@ import Week from "./components/Week";
 import logo from "./moon-logo.svg";
 import moonImg from "./moon.png";
 
-// export const getMoonPhases = async (url) => {
-//   const response = await fetch(url);
-//   const data = response.json();
-//   console.log(data);
-//   return data;
-// };
-
 const App = () => {
   const [moonPhaseData, setMoonPhaseData] = React.useState({});
 
@@ -38,8 +31,6 @@ const App = () => {
       dayjs().get("month"),
       dayjs().get("year"),
     );
-    console.log(formattedData);
-
     setMoonPhaseData(formattedData);
   };
   React.useEffect(() => {
@@ -52,6 +43,16 @@ const App = () => {
 
   if (isAuthenticated) {
     const username = user.email ? user.email : user.username;
+    //check the database to see if the email is in the database
+    const checkUser = async () => {
+      const currentUser = await apiClient.checkUser(user.email);
+      console.log(currentUser);
+    };
+    checkUser();
+    console.log(user.email);
+    //if not insert it
+    //if so use user.id
+
     return (
       <Router>
         <main>

@@ -12,8 +12,17 @@ export const getTasks = async (startDate, endDate) => {
     return response.json();
   }
 };
-//get tasks by week
-//startDate endDate
+export const checkUser = async (email) => {
+  console.log("Im in checkUser!", email);
+  const response = await fetch("/users/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email: email }),
+  });
+  return response.json();
+};
 export const getMoonData = async (month, year) => {
   const url = `https://www.icalendar37.net/lunar/api/?lang=en&month=${
     month + 1
