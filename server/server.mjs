@@ -30,6 +30,19 @@ tasks.post("/", async (request, response) => {
   response.status(201).json(entry);
 });
 
+app.post("/users/user", async (request, response) => {
+  const email = request.body;
+  console.log("Email in the post route", email);
+  const user = await db.getUser(email);
+  console.log({ user });
+  response.json(user);
+});
+app.delete("/deletetask/:id", async (request, response) => {
+  const id = request.body.id;
+  const deletedTask = await db.deleteTask(id);
+  console.log({ deletedTask });
+  response.status(201).json(deletedTask);
+});
 app.use("/api/tasks", tasks);
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
