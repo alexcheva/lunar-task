@@ -62,7 +62,7 @@ const App = () => {
       console.log(currentUser);
     };
     checkUser();
-    let dateStr = "2021-05-21";
+
     return (
       <Router>
         <main>
@@ -81,7 +81,9 @@ const App = () => {
               <Nav className="justify-content-end" activeKey="/home">
                 <Nav.Item>
                   <Nav.Link active>
-                    <Link to="/day/:day">Day View</Link>
+                    <Link to={`/day/${dayjs().format("YYYY-MM-DD")}`}>
+                      Day View
+                    </Link>
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
@@ -114,7 +116,7 @@ const App = () => {
               </Route>
               <Route path="/">
                 <section>
-                  <DatePickerComponent />
+                  <Day initialData={moonPhaseData} />
                 </section>
               </Route>
             </Switch>

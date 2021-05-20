@@ -14,7 +14,7 @@ import * as apiClient from "../apiClient";
 const Day = ({ initialData }) => {
   let { day } = useParams();
   let history = useHistory();
-  //const [startDate, setStartDate] = React.useState(new Date(day));
+
   const [date, setDate] = React.useState(dayjs(day));
   const [tasks, setTasks] = React.useState([]);
   const [data, setData] = React.useState(initialData);
@@ -54,14 +54,17 @@ const Day = ({ initialData }) => {
 
   return (
     <section>
-      <DatePicker
-        selected={date.toDate()}
-        onChange={(date) => {
-          setDate(dayjs(date));
-          history.push(`/day/${dayjs(date).format("YYYY-MM-DD")}`);
-        }}
-      />
       <Card className="text-center" bg="dark" text="light">
+        <Card.Header>
+          Choose the Date:{" "}
+          <DatePicker
+            selected={date.toDate()}
+            onChange={(date) => {
+              setDate(dayjs(date));
+              history.push(`/day/${dayjs(date).format("YYYY-MM-DD")}`);
+            }}
+          />
+        </Card.Header>
         <Card.Body>
           <Card.Title>
             <Link to={`/day/${date.add(-1, "day").format("YYYY-MM-DD")}`}>
