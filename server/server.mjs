@@ -29,9 +29,9 @@ tasks.post("/", async (request, response) => {
   console.log({ entry });
   response.status(201).json(entry);
 });
-
+app.use(express.json());
 app.post("/users/user", async (request, response) => {
-  const email = request.body;
+  const email = request.body.email;
   console.log("Email in the post route", email);
   const user = await db.getUser(email);
   console.log({ user });

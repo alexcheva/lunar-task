@@ -80,3 +80,13 @@ export const addTask = async (task, date) => {
   });
   return response.json();
 };
+export const deleteTask = async (id) => {
+  const response = await fetch("/deletetask/", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id }),
+  });
+  return response.json();
+};
