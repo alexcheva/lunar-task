@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import "react-datepicker/dist/react-datepicker.css";
+
 import { useAuth0 } from "@auth0/auth0-react";
 import dayjs from "dayjs";
 import Container from "react-bootstrap/Container";
@@ -7,6 +9,7 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import Spinner from "react-bootstrap/Spinner";
+import DatePicker from "react-datepicker";
 import {
   BrowserRouter as Router,
   Switch,
@@ -59,7 +62,7 @@ const App = () => {
       console.log(currentUser);
     };
     checkUser();
-
+    let dateStr = "2021-05-21";
     return (
       <Router>
         <main>
@@ -78,7 +81,7 @@ const App = () => {
               <Nav className="justify-content-end" activeKey="/home">
                 <Nav.Item>
                   <Nav.Link active>
-                    <Link to="/day/:date">Day View</Link>
+                    <Link to="/day/:day">Day View</Link>
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
@@ -104,9 +107,14 @@ const App = () => {
                   <Week initialData={moonPhaseData} />
                 </section>
               </Route>
-              <Route path="/day/:date">
+              <Route path="/day/:day">
                 <section>
                   <Day initialData={moonPhaseData} />
+                </section>
+              </Route>
+              <Route path="/">
+                <section>
+                  <DatePickerComponent />
                 </section>
               </Route>
             </Switch>
@@ -117,6 +125,13 @@ const App = () => {
   } else {
     return <button onClick={() => loginWithRedirect()}>Log In</button>;
   }
+};
+const DatePickerComponent = () => {
+  const [startDate, setStartDate] = React.useState(new Date());
+  console.log(startDate);
+  return (
+    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+  );
 };
 
 export default App;

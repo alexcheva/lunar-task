@@ -3,6 +3,7 @@ import * as React from "react";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import { Link } from "react-router-dom";
 
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
@@ -23,7 +24,11 @@ const DayOfWeek = ({ date, svg, data, tasks }) => {
         dangerouslySetInnerHTML={{ __html: svg }}
       ></div>
       <Card.Body>
-        <Card.Title>{date.format("ddd MMM D YYYY")}</Card.Title>
+        <Card.Title>
+          <Link to={`/day/${date.format("YYYY-MM-DD")}`}>
+            {date.format("ddd MMM D YYYY")}
+          </Link>
+        </Card.Title>
         <Card.Text>
           {data}
           <br />
