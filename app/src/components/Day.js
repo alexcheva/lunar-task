@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import dayjs from "dayjs";
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
@@ -47,14 +48,7 @@ const Day = ({ initialData }) => {
   const svg = dayData.svg;
 
   return (
-    <Card>
-      <div
-        className="card-img-top mx-auto d-block"
-        dangerouslySetInnerHTML={{
-          __html: svg,
-        }}
-      ></div>
-      {/* bg="dark" text="light" */}
+    <Card className="text-center" bg="dark" text="light">
       <Card.Body>
         <Card.Title>
           <button onClick={() => changeDateValue(-1)}>
@@ -65,16 +59,22 @@ const Day = ({ initialData }) => {
             <i className="bi bi-arrow-right-circle"></i>
           </button>
         </Card.Title>
+        <div
+          className="card-img-top mx-auto d-block"
+          dangerouslySetInnerHTML={{
+            __html: svg,
+          }}
+        ></div>
         <Card.Text>
-          {dayData.AlexPhase}
+          Moon Phase: {dayData.AlexPhase}
           <br />
-          {moonPhases[dayData.AlexPhase]?.action}
+          Action: {moonPhases[dayData.AlexPhase]?.action}
           <br />
-          {moonPhases[dayData.AlexPhase]?.desc}
+          Details: {moonPhases[dayData.AlexPhase]?.desc}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <ListGroupItem>
+        <ListGroupItem variant="dark">
           <AddTask loadTasks={loadTasks} date={date} />
         </ListGroupItem>
       </ListGroup>
@@ -91,14 +91,19 @@ const TaskList = ({ loadTasks, tasks }) => {
   return (
     <ListGroup className="list-group-flush">
       {tasks.map(({ id, task }) => (
-        <ListGroupItem key={id}>
-          {task}
-          <button variant="warning">
+        <ListGroupItem variant="dark" key={id}>
+          {task}{" "}
+          <Button variant="outline-warning" size="sm">
             <i className="bi bi-pencil-square"></i>
-          </button>
-          <button variant="danger" onClick={() => deleteTask(id)} value={task}>
+          </Button>{" "}
+          <Button
+            variant="outline-danger"
+            size="sm"
+            onClick={() => deleteTask(id)}
+            value={task}
+          >
             <i className="bi bi-trash-fill"></i>
-          </button>
+          </Button>
         </ListGroupItem>
       ))}
     </ListGroup>

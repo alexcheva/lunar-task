@@ -22,7 +22,7 @@ img#header-logo {
   flex-shrink: 0;
   width: 40%;
   margin: auto;
-  padding-top: 1em;
+  padding-bottom: 1em;
 }
 .card {
   min-width: 20%;
@@ -104,6 +104,10 @@ a {
 }
 a:hover {
   color: #e48df3;
+}
+.list-group-item-dark {
+  color: #f8f9fa !important;
+  background-color: #343a40;
 }
 /* nav {
   text-align: end;

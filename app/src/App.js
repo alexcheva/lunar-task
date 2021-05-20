@@ -6,10 +6,16 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
 
 import * as apiClient from "./apiClient";
-import Calendar from "./components/Calendar";
 import Day from "./components/Day";
 import Week from "./components/Week";
 import logo from "./moon-logo.svg";
@@ -38,7 +44,11 @@ const App = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
   }
 
   if (isAuthenticated) {
@@ -68,7 +78,7 @@ const App = () => {
               <Nav className="justify-content-end" activeKey="/home">
                 <Nav.Item>
                   <Nav.Link active>
-                    <Link to="/">Day View</Link>
+                    <Link to="/day/:date">Day View</Link>
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
@@ -94,10 +104,7 @@ const App = () => {
                   <Week initialData={moonPhaseData} />
                 </section>
               </Route>
-              <Route path="/calendar">
-                <Calendar data={moonPhaseData} />
-              </Route>
-              <Route path="/">
+              <Route path="/day/:date">
                 <section>
                   <Day initialData={moonPhaseData} />
                 </section>
