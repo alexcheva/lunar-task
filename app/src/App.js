@@ -43,15 +43,12 @@ const App = () => {
 
   if (isAuthenticated) {
     const username = user.email ? user.email : user.username;
-    //check the database to see if the email is in the database
+
     const checkUser = async () => {
       const currentUser = await apiClient.checkUser(user.email);
       console.log(currentUser);
     };
     checkUser();
-    console.log(user.email);
-    //if not insert it
-    //if so use user.id
 
     return (
       <Router>
@@ -79,18 +76,9 @@ const App = () => {
                     <Link to="/week">Week View</Link>
                   </Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="link-2">
-                    <Link to="/calendar">Calendar View</Link>
-                  </Nav.Link>
-                </Nav.Item>
-
                 <NavDropdown title={username} id="nav-dropdown">
-                  <NavDropdown.Item eventKey="3.1">Profile</NavDropdown.Item>
-                  <NavDropdown.Item eventKey="3.2">Journal</NavDropdown.Item>
-                  <NavDropdown.Divider />
                   <NavDropdown.Item
-                    eventKey="3.3"
+                    eventKey="2.1"
                     onClick={() => logout({ returnTo: window.location.origin })}
                   >
                     Log Out

@@ -11,14 +11,12 @@ const tasks = express.Router();
 tasks.get("/", async (request, response) => {
   const startDate = request.query.startDate;
   const endDate = request.query.endDate;
-  //condition weather request query by date or by week
   let tasks = [];
   if (!endDate) {
     tasks = await db.getTasks(startDate);
   } else {
     tasks = await db.getTasks(startDate, endDate);
   }
-  console.log({ tasks });
   response.json(tasks);
 });
 
@@ -26,10 +24,10 @@ tasks.use(express.json());
 tasks.post("/", async (request, response) => {
   const { task, date } = request.body;
   const entry = await db.addTask(task, date);
-  console.log({ entry });
   response.status(201).json(entry);
 });
 app.use(express.json());
+
 app.post("/users/user", async (request, response) => {
   const email = request.body.email;
   console.log("Email in the post route", email);
@@ -40,11 +38,10 @@ app.post("/users/user", async (request, response) => {
   console.log({ user });
   response.json(user);
 });
-app.delete("/deletetask/:id", async (request, response) => {
-  const id = request.body.id;
-  const deletedTask = await db.deleteTask(id);
-  console.log({ deletedTask });
-  response.status(201).json(deletedTask);
+tasks.delete("/:id", async (request, response) => {
+  const id = request.params.id;
+  await db.deleteTask(id);
+  response.end();
 });
 app.use("/api/tasks", tasks);
 

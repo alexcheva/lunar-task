@@ -31,7 +31,7 @@ export const getUser = (email) => {
   console.log("I'm inside the sql function", email);
   return db.any("SELECT * FROM users WHERE account=$1", [email]);
 };
-//getUser("a.lukinicheva@gmail.com").then((r) => console.log(r));
+
 export const addUser = async (email) => {
   const day = new Date();
   return (
@@ -41,9 +41,8 @@ export const addUser = async (email) => {
     )
   )[0];
 };
-addUser("a.lukinicheva@gmail.com");
 export const deleteTask = async (id) => {
-  return (await db.any("DELETE FROM tasks WHERE id = $1;", [true][id]))[0];
+  return await db.any("DELETE FROM tasks WHERE id = $1;", [id]);
 };
 function initDb() {
   let connection;

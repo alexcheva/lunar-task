@@ -78,26 +78,32 @@ const Day = ({ initialData }) => {
           <AddTask loadTasks={loadTasks} date={date} />
         </ListGroupItem>
       </ListGroup>
-      <TaskList tasks={tasks} />
+      <TaskList loadTasks={loadTasks} tasks={tasks} />
     </Card>
   );
 };
 
-const TaskList = ({ tasks }) => (
-  <ListGroup className="list-group-flush">
-    {tasks.map(({ id, task }) => (
-      <ListGroupItem key={id}>
-        {task}
-        <button variant="warning">
-          <i className="bi bi-pencil-square"></i>
-        </button>
-        <button variant="danger">
-          <i className="bi bi-trash-fill"></i>
-        </button>
-      </ListGroupItem>
-    ))}
-  </ListGroup>
-);
+const TaskList = ({ loadTasks, tasks }) => {
+  const deleteTask = async (id) => {
+    await apiClient.deleteTask(id);
+    loadTasks();
+  };
+  return (
+    <ListGroup className="list-group-flush">
+      {tasks.map(({ id, task }) => (
+        <ListGroupItem key={id}>
+          {task}
+          <button variant="warning">
+            <i className="bi bi-pencil-square"></i>
+          </button>
+          <button variant="danger" onClick={() => deleteTask(id)} value={task}>
+            <i className="bi bi-trash-fill"></i>
+          </button>
+        </ListGroupItem>
+      ))}
+    </ListGroup>
+  );
+};
 
 const AddTask = ({ loadTasks, date }) => {
   const [task, setTask] = React.useState("");
