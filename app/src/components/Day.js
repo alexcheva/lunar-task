@@ -21,9 +21,9 @@ const Day = ({ initialData, userId }) => {
 
   const loadTasks = async () => {
     setTasks(
-      await userId.then((id) =>
-        apiClient.getTasks(id, date.format("YYYY-MM-DD")),
-      ),
+      await userId
+        .then((data) => data.id)
+        .then((id) => apiClient.getTasks(id, date.format("YYYY-MM-DD"))),
     );
   };
 
@@ -148,7 +148,9 @@ const AddTask = ({ loadTasks, date, userId }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await userId.then((id) => apiClient.addTask(task, date, id));
+      await userId
+        .then((data) => data.id)
+        .then((id) => apiClient.addTask(task, date, id));
       loadTasks();
       setTask("");
     }
