@@ -45,6 +45,9 @@ img#header-logo {
   display: inline-block;
   vertical-align: top;
 }
+#day-view-moon {
+  width: 20%;
+}
 .titleCalendar {
   width: calc(100% / 7 * 5);
   font-size: 24px;

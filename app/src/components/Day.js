@@ -84,6 +84,7 @@ const Day = ({ initialData, userId }) => {
             </Link>
           </Card.Title>
           <div
+            id="day-view-moon"
             className="card-img-top mx-auto d-block"
             dangerouslySetInnerHTML={{
               __html: svg,
