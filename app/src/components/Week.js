@@ -110,13 +110,15 @@ const Quote = () => {
       text="light"
     >
       <Card.Body>
-        <Card.Title>Inspirational Quote for the Week:</Card.Title>
+        <Card.Title>Quote Of the Week:</Card.Title>
 
         <Card.Img variant="top" id="quoteImg" src={img01} />
         <Card.Text>
-          Quote: {quote.q}
+          Quote:
+          <em> {quote.q}</em>
           <br />
-          Author: {quote.a}
+          Author:
+          <em> {quote.a}</em>
         </Card.Text>
       </Card.Body>
     </Card>

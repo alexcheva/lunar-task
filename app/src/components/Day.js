@@ -14,7 +14,6 @@ import * as apiClient from "../apiClient";
 const Day = ({ initialData, userId }) => {
   let { day } = useParams();
   let history = useHistory();
-  console.log({ userId });
 
   const [date, setDate] = React.useState(dayjs(day));
   const [tasks, setTasks] = React.useState([]);
@@ -112,10 +111,10 @@ const Day = ({ initialData, userId }) => {
   );
 };
 
-const TaskList = ({ loadTasks, tasks, userId }) => {
+const TaskList = ({ loadTasks, tasks }) => {
   const deleteTask = async (id) => {
     await apiClient.deleteTask(id);
-    loadTasks(userId);
+    loadTasks();
   };
   return (
     <ListGroup className="list-group-flush">
@@ -144,7 +143,7 @@ const AddTask = ({ loadTasks, date, userId }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await apiClient.addTask(task, date, userId);
+      await userId.then((id) => apiClient.addTask(task, date, id));
       loadTasks();
       setTask("");
     }

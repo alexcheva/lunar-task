@@ -27,11 +27,8 @@ export const addTask = async (task, date, userId) => {
 };
 export const getUser = (email) => {
   return db
-    .any("SELECT * FROM users WHERE account=$1", [email])
-    .then((data) => {
-      console.log("got query results:", data);
-      return data.id;
-    });
+    .oneOrNone("SELECT * FROM users WHERE account=$1 LIMIT 1", [email])
+    .then((data) => data.id);
 };
 
 export const addUser = async (email) => {
