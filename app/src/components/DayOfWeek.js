@@ -12,8 +12,13 @@ import * as apiClient from "../apiClient";
 const DayOfWeek = ({ date, svg, data, tasks, userId }) => {
   const [dayTasks, setDayTasks] = React.useState([]);
 
-  const loadDayTasks = async () =>
-    setDayTasks(await apiClient.getTasks(date.format("YYYY-MM-DD")));
+  const loadDayTasks = async () => {
+    setDayTasks(
+      await userId
+        .then((data) => data.id)
+        .then((id) => apiClient.getTasks(id, date.format("YYYY-MM-DD"))),
+    );
+  };
 
   React.useEffect(() => {
     setDayTasks(tasks);
@@ -63,7 +68,7 @@ const TaskList = ({ loadTasks, tasks }) => {
   return (
     <ListGroup className="list-group-flush">
       {tasks.map(({ id, task }) => (
-        <ListGroupItem key={id}>
+        <ListGroupItem variant="dark" key={id}>
           {task}{" "}
           <Button
             variant="outline-danger"
@@ -87,7 +92,9 @@ const AddTask = ({ loadDayTasks, date, userId }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await userId.then((id) => apiClient.addTask(task, date, id));
+      await userId
+        .then((data) => data.id)
+        .then((id) => apiClient.addTask(task, date, id));
       loadDayTasks();
       setTask("");
     }

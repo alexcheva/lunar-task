@@ -23,13 +23,15 @@ const Week = ({ initialData, userId }) => {
   }
   const loadTasks = async () => {
     setDayTasks(
-      await userId.then((id) =>
-        apiClient.getTasks(
-          id,
-          dates[0].format("YYYY-MM-DD"),
-          dates[6].format("YYYY-MM-DD"),
+      await userId
+        .then((data) => data.id)
+        .then((id) =>
+          apiClient.getTasks(
+            id,
+            dates[0].format("YYYY-MM-DD"),
+            dates[6].format("YYYY-MM-DD"),
+          ),
         ),
-      ),
     );
   };
 
