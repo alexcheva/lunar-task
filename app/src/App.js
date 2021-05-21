@@ -51,8 +51,8 @@ const App = () => {
   if (isAuthenticated) {
     const username = user.email ? user.email : user.username;
 
-    const checkUser = () => {
-      const currentUser = apiClient.checkUser(user.email);
+    const checkUser = async () => {
+      const currentUser = await apiClient.checkUser(user.email);
       return currentUser;
     };
     const userId = checkUser();

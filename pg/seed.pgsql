@@ -143,7 +143,7 @@ ALTER SEQUENCE public.tasks_user_id_seq OWNED BY public.tasks.user_id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    account character varying,
+    account character varying UNIQUE,
     date_joined date
 );
 

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
 
-const DayOfWeek = ({ date, svg, data, tasks }) => {
+const DayOfWeek = ({ date, svg, data, tasks, userId }) => {
   const [dayTasks, setDayTasks] = React.useState([]);
 
   const loadDayTasks = async () =>
@@ -47,7 +47,7 @@ const DayOfWeek = ({ date, svg, data, tasks }) => {
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroupItem variant="dark">
-          <AddTask loadDayTasks={loadDayTasks} date={date} />
+          <AddTask loadDayTasks={loadDayTasks} userId={userId} date={date} />
         </ListGroupItem>
       </ListGroup>
       <TaskList loadDayTasks={loadDayTasks} tasks={dayTasks} />
@@ -79,7 +79,7 @@ const TaskList = ({ loadTasks, tasks }) => {
   );
 };
 
-const AddTask = ({ loadDayTasks, date }) => {
+const AddTask = ({ loadDayTasks, date, userId }) => {
   const [task, setTask] = React.useState("");
 
   const canAdd = task !== "";
@@ -87,7 +87,7 @@ const AddTask = ({ loadDayTasks, date }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await apiClient.addTask(task, date);
+      await userId.then((id) => apiClient.addTask(task, date, id));
       loadDayTasks();
       setTask("");
     }
@@ -99,7 +99,7 @@ const AddTask = ({ loadDayTasks, date }) => {
         New task:{" "}
         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
       </label>
-      <Button variant="info" disabled={!canAdd}>
+      <Button type="submit" variant="info" disabled={!canAdd}>
         Add
       </Button>
     </form>

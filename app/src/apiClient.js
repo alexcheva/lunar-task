@@ -1,13 +1,15 @@
 import { calculateMoonPhase } from "./MoonPhases";
 import moonImg from "./moon.png";
 
-export const getTasks = async (startDate, endDate) => {
+export const getTasks = async (userId, startDate, endDate) => {
   if (!endDate) {
-    const response = await fetch(`/api/tasks?startDate=${startDate}`);
+    const response = await fetch(
+      `/api/tasks?u=${userId}&startDate=${startDate}`,
+    );
     return response.json();
   } else {
     const response = await fetch(
-      `/api/tasks?startDate=${startDate}&endDate=${endDate}`,
+      `/api/tasks?u=${userId}&startDate=${startDate}&endDate=${endDate}`,
     );
     return response.json();
   }

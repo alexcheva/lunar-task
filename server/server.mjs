@@ -9,13 +9,14 @@ const port = process.env.PORT || 4000;
 const tasks = express.Router();
 
 tasks.get("/", async (request, response) => {
+  const userId = request.query.u;
   const startDate = request.query.startDate;
   const endDate = request.query.endDate;
   let tasks = [];
   if (!endDate) {
-    tasks = await db.getTasks(startDate);
+    tasks = await db.getTasks(userId, startDate);
   } else {
-    tasks = await db.getTasks(startDate, endDate);
+    tasks = await db.getTasks(userId, startDate, endDate);
   }
   response.json(tasks);
 });
@@ -32,7 +33,7 @@ app.post("/users/user", async (request, response) => {
   const email = request.body.email;
   let user = await db.getUser(email);
   console.log(user);
-  if (!user) {
+  if (!user.length) {
     user = await db.addUser(email);
   }
   response.json(user);

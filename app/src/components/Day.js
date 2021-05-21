@@ -19,8 +19,13 @@ const Day = ({ initialData, userId }) => {
   const [tasks, setTasks] = React.useState([]);
   const [data, setData] = React.useState(initialData);
 
-  const loadTasks = async () =>
-    setTasks(await apiClient.getTasks(date.format("YYYY-MM-DD")));
+  const loadTasks = async () => {
+    setTasks(
+      await userId.then((id) =>
+        apiClient.getTasks(id, date.format("YYYY-MM-DD")),
+      ),
+    );
+  };
 
   const loadMoonData = async (month) => {
     const formattedData = await apiClient.getMoonData(
@@ -155,7 +160,7 @@ const AddTask = ({ loadTasks, date, userId }) => {
         New task:{" "}
         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
       </label>{" "}
-      <Button variant="info" disabled={!canAdd}>
+      <Button type="submit" variant="info" disabled={!canAdd}>
         Add
       </Button>
     </form>

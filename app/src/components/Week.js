@@ -10,7 +10,7 @@ import img01 from "../imgs/04.jpeg";
 
 import DayOfWeek from "./DayOfWeek";
 
-const Week = ({ initialData }) => {
+const Week = ({ initialData, userId }) => {
   const [startOfWeek, setStartOfWeek] = React.useState(
     dayjs().startOf("week").add(1, "day"),
   );
@@ -21,16 +21,18 @@ const Week = ({ initialData }) => {
   for (let i = 0; i < 7; i++) {
     dates.push(startOfWeek.add(i, "day"));
   }
-  const loadTasks = async () =>
+  const loadTasks = async () => {
     setDayTasks(
-      await apiClient.getTasks(
-        dates[0].format("YYYY-MM-DD"),
-        dates[6].format("YYYY-MM-DD"),
+      await userId.then((id) =>
+        apiClient.getTasks(
+          id,
+          dates[0].format("YYYY-MM-DD"),
+          dates[6].format("YYYY-MM-DD"),
+        ),
       ),
     );
+  };
 
-  console.log(dayTasks);
-  //filter dates from
   const loadMoonData = async (month) => {
     const formattedData = await apiClient.getMoonData(
       month,
@@ -75,6 +77,7 @@ const Week = ({ initialData }) => {
           );
           return (
             <DayOfWeek
+              userId={userId}
               date={date}
               tasks={tasksOfTheDay}
               key={i}
