@@ -32,7 +32,7 @@ app.post("/users/user", async (request, response) => {
   const email = request.body.email;
   console.log("Email in the post route", email);
   let user = await db.getUser(email);
-  if (!user) {
+  if (!user.length) {
     user = await db.addUser(email);
   }
   console.log({ user });
