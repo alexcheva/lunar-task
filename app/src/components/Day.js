@@ -11,9 +11,10 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
 //rename data to props
-const Day = ({ initialData }) => {
+const Day = ({ initialData, userId }) => {
   let { day } = useParams();
   let history = useHistory();
+  console.log({ userId });
 
   const [date, setDate] = React.useState(dayjs(day));
   const [tasks, setTasks] = React.useState([]);
@@ -36,7 +37,7 @@ const Day = ({ initialData }) => {
   };
 
   React.useEffect(() => {
-    if (data[0].month !== date.month()) {
+    if (data[0]?.month !== date.month()) {
       loadMoonData(date.month());
     }
     loadTasks();
@@ -98,28 +99,25 @@ const Day = ({ initialData }) => {
         </Card.Body>
         <ListGroup className="list-group-flush">
           <ListGroupItem variant="dark">
-            <AddTask loadTasks={loadTasks} date={date} />
+            <AddTask loadTasks={loadTasks} userId={userId} date={date} />
           </ListGroupItem>
         </ListGroup>
-        <TaskList loadTasks={loadTasks} tasks={tasks} />
+        <TaskList loadTasks={loadTasks} userId={userId} tasks={tasks} />
       </Card>
     </section>
   );
 };
 
-const TaskList = ({ loadTasks, tasks }) => {
+const TaskList = ({ loadTasks, tasks, userId }) => {
   const deleteTask = async (id) => {
     await apiClient.deleteTask(id);
-    loadTasks();
+    loadTasks(userId);
   };
   return (
     <ListGroup className="list-group-flush">
       {tasks.map(({ id, task }) => (
         <ListGroupItem variant="dark" key={id}>
           {task}{" "}
-          <Button variant="outline-warning" size="sm">
-            <i className="bi bi-pencil-square"></i>
-          </Button>{" "}
           <Button
             variant="outline-danger"
             size="sm"
@@ -134,7 +132,7 @@ const TaskList = ({ loadTasks, tasks }) => {
   );
 };
 
-const AddTask = ({ loadTasks, date }) => {
+const AddTask = ({ loadTasks, date, userId }) => {
   const [task, setTask] = React.useState("");
 
   const canAdd = task !== "";
@@ -142,7 +140,7 @@ const AddTask = ({ loadTasks, date }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await apiClient.addTask(task, date);
+      await apiClient.addTask(task, date, userId);
       loadTasks();
       setTask("");
     }
@@ -153,8 +151,10 @@ const AddTask = ({ loadTasks, date }) => {
       <label>
         New task:{" "}
         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>
-      <button disabled={!canAdd}>Add</button>
+      </label>{" "}
+      <Button variant="info" disabled={!canAdd}>
+        Add
+      </Button>
     </form>
   );
 };

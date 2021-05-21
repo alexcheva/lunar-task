@@ -1,7 +1,11 @@
 import * as React from "react";
 
 import dayjs from "dayjs";
-import CardGroup from "react-bootstrap/CardGroup";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import CardDeck from "react-bootstrap/CardDeck";
+import ListGroup from "react-bootstrap/ListGroup";
+import ListGroupItem from "react-bootstrap/ListGroupItem";
 
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
@@ -55,15 +59,16 @@ const Week = ({ initialData }) => {
   return (
     <>
       <h2>
-        <button onClick={() => changeWeek(-1)}>
+        <Button variant="info" onClick={() => changeWeek(-1)}>
           <i className="bi bi-arrow-left-circle"></i>
-        </button>{" "}
-        Week View
-        <button onClick={() => changeWeek(1)}>
+        </Button>{" "}
+        Week View{" "}
+        <Button variant="info" onClick={() => changeWeek(1)}>
           <i className="bi bi-arrow-right-circle"></i>
-        </button>
+        </Button>
       </h2>
-      <CardGroup>
+      <CardDeck>
+        <Quote />
         {dates.map((date, i) => {
           const tasksOfTheDay = dayTasks.filter(
             (task) =>
@@ -80,9 +85,43 @@ const Week = ({ initialData }) => {
             />
           );
         })}
-      </CardGroup>
+      </CardDeck>
     </>
   );
 };
+const Quote = () => {
+  // const [quote, setQuote] = React.useState({});
 
+  // const loadQuote = async () =>
+  //   setQuote(await apiClient.getQuote(date.format("YYYY-MM-DD")));
+
+  // React.useEffect(() => {
+  //   setQuote(quoteData);
+  // }, [quoteData]);
+  const quote = {
+    q: "The merit of all things lies in their difficulty.",
+    a: "Alexandre Dumas",
+    h:
+      "<blockquote>&ldquo;The merit of all things lies in their difficulty.&rdquo; &mdash; <footer>Alexandre Dumas</footer></blockquote>",
+  };
+  return (
+    <Card
+      className="text-center"
+      style={{ width: "18rem" }}
+      bg="dark"
+      text="light"
+    >
+      <Card.Body>
+        <Card.Title>Inspirational Quote for the Week:</Card.Title>
+
+        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Text>
+          Quote: {quote.q}
+          <br />
+          Author: {quote.a}
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
 export default Week;

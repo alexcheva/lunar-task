@@ -4,25 +4,19 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import dayjs from "dayjs";
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Jumbotron from "react-bootstrap/Jumbotron";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import Spinner from "react-bootstrap/Spinner";
-import DatePicker from "react-datepicker";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import * as apiClient from "./apiClient";
 import Day from "./components/Day";
 import Week from "./components/Week";
 import logo from "./moon-logo.svg";
-import moonImg from "./moon.png";
 
 const App = () => {
   const [moonPhaseData, setMoonPhaseData] = React.useState({});
@@ -59,9 +53,9 @@ const App = () => {
 
     const checkUser = async () => {
       const currentUser = await apiClient.checkUser(user.email);
-      console.log(currentUser);
+      return currentUser;
     };
-    checkUser();
+    const userId = checkUser();
 
     return (
       <Router>
@@ -106,17 +100,17 @@ const App = () => {
             <Switch>
               <Route path="/week">
                 <section>
-                  <Week initialData={moonPhaseData} />
+                  <Week initialData={moonPhaseData} userId={userId} />
                 </section>
               </Route>
               <Route path="/day/:day">
                 <section>
-                  <Day initialData={moonPhaseData} />
+                  <Day initialData={moonPhaseData} userId={userId} />
                 </section>
               </Route>
               <Route path="/">
                 <section>
-                  <Day initialData={moonPhaseData} />
+                  <Day initialData={moonPhaseData} userId={userId} />
                 </section>
               </Route>
             </Switch>
@@ -125,15 +119,28 @@ const App = () => {
       </Router>
     );
   } else {
-    return <button onClick={() => loginWithRedirect()}>Log In</button>;
+    return (
+      <Jumbotron fluid>
+        <h1>
+          <img alt="Lunar Task Logo" className="intro-logo" src={logo} /> Lunar
+          Task
+        </h1>
+        <p>
+          <strong> Lunar task</strong> is a task management app that integrates
+          with Moon Phase API to provide spiritual context for the day and keep
+          your intentions in line with the universe.
+          <span role="img" aria-label="sparkling stars emoji">
+            ✨
+          </span>
+        </p>
+        <p>
+          <Button onClick={() => loginWithRedirect()} variant="info">
+            Log in
+          </Button>
+        </p>
+      </Jumbotron>
+    );
   }
-};
-const DatePickerComponent = () => {
-  const [startDate, setStartDate] = React.useState(new Date());
-  console.log(startDate);
-  return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-  );
 };
 
 export default App;

@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
@@ -18,50 +19,63 @@ const DayOfWeek = ({ date, svg, data, tasks }) => {
     setDayTasks(tasks);
   }, [tasks]);
   return (
-    <Card>
-      <div
-        className="card-img-top mx-auto d-block"
-        dangerouslySetInnerHTML={{ __html: svg }}
-      ></div>
+    <Card
+      className="text-center"
+      style={{ width: "18rem" }}
+      bg="dark"
+      text="light"
+    >
       <Card.Body>
         <Card.Title>
           <Link to={`/day/${date.format("YYYY-MM-DD")}`}>
             {date.format("ddd MMM D YYYY")}
           </Link>
         </Card.Title>
+        <div
+          className="card-img-top mx-auto d-block"
+          dangerouslySetInnerHTML={{ __html: svg }}
+        ></div>
         <Card.Text>
-          {data}
+          Moon Phase: {data}
           <br />
-          {moonPhases[data]?.action}
+          Action: {moonPhases[data]?.action}
           <br />
-          {moonPhases[data]?.desc}
+          Details: {moonPhases[data]?.desc}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <ListGroupItem>
+        <ListGroupItem variant="dark">
           <AddTask loadDayTasks={loadDayTasks} date={date} />
         </ListGroupItem>
       </ListGroup>
-      <TaskList tasks={dayTasks} />
+      <TaskList loadDayTasks={loadDayTasks} tasks={dayTasks} />
     </Card>
   );
 };
 
-const TaskList = ({ tasks }) => (
-  <ListGroup className="list-group-flush">
-    {tasks.map(({ id, task }) => (
-      <ListGroupItem key={id}>
-        {task}
-        <button>
-          <i className="bi bi-pencil-square"></i>
-        </button>
-        <button variant="danger">
-          <i className="bi bi-trash-fill"></i>
-        </button>
-      </ListGroupItem>
-    ))}
-  </ListGroup>
-);
+const TaskList = ({ loadTasks, tasks }) => {
+  const deleteTask = async (id) => {
+    await apiClient.deleteTask(id);
+    loadTasks();
+  };
+  return (
+    <ListGroup className="list-group-flush">
+      {tasks.map(({ id, task }) => (
+        <ListGroupItem key={id}>
+          {task}{" "}
+          <Button
+            variant="outline-danger"
+            size="sm"
+            onClick={() => deleteTask(id)}
+            value={task}
+          >
+            <i className="bi bi-trash-fill"></i>
+          </Button>
+        </ListGroupItem>
+      ))}
+    </ListGroup>
+  );
+};
 
 const AddTask = ({ loadDayTasks, date }) => {
   const [task, setTask] = React.useState("");
@@ -83,7 +97,9 @@ const AddTask = ({ loadDayTasks, date }) => {
         New task:{" "}
         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
       </label>
-      <button disabled={!canAdd}>Add</button>
+      <Button variant="info" disabled={!canAdd}>
+        Add
+      </Button>
     </form>
   );
 };

@@ -13,7 +13,6 @@ export const getTasks = async (startDate, endDate) => {
   }
 };
 export const checkUser = async (email) => {
-  console.log("Im in checkUser!", email);
   const response = await fetch("/users/user", {
     method: "POST",
     headers: {
@@ -34,6 +33,7 @@ export const getMoonData = async (month, year) => {
     return {
       ...phase,
       svg: phase.svg
+        .replace('width="150" height="150"', "")
         .replace(
           '<a xlink:href="https://www.icalendar37.net/lunar/app/" rel="noopener noreferrer" target="_blank">',
           "",
@@ -67,20 +67,20 @@ export const getMoonData = async (month, year) => {
       month: month,
     };
   });
-  //return response.json();
   return formattedData;
 };
 
-export const addTask = async (task, date) => {
+export const addTask = async (task, date, userId) => {
   const response = await fetch("/api/tasks", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ task, date }),
+    body: JSON.stringify({ task, date, userId }),
   });
   return response.json();
 };
+
 export const deleteTask = async (id) => {
   await fetch(`/api/tasks/${id}`, {
     method: "DELETE",

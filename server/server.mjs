@@ -22,20 +22,18 @@ tasks.get("/", async (request, response) => {
 
 tasks.use(express.json());
 tasks.post("/", async (request, response) => {
-  const { task, date } = request.body;
-  const entry = await db.addTask(task, date);
+  const { task, date, userId } = request.body;
+  const entry = await db.addTask(task, date, userId);
   response.status(201).json(entry);
 });
 app.use(express.json());
 
 app.post("/users/user", async (request, response) => {
   const email = request.body.email;
-  console.log("Email in the post route", email);
   let user = await db.getUser(email);
-  if (!user.length) {
+  if (!user) {
     user = await db.addUser(email);
   }
-  console.log({ user });
   response.json(user);
 });
 tasks.delete("/:id", async (request, response) => {

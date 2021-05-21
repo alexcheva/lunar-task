@@ -16,20 +16,22 @@ export const getTasks = async (startDate, endDate) => {
   //getTasks(new Date(2021, 4, 12)).then((result) => console.log(result));
 };
 //get tasks by week
-export const addTask = async (task, date) => {
+export const addTask = async (task, date, userId) => {
   const day = new Date(date);
-  const user_id = 1;
-
   return (
     await db.any(
       "INSERT INTO tasks(task,date,user_id) VALUES($1,$2,$3) RETURNING id, task, date, user_id",
-      [task, day, user_id],
+      [task, day, userId],
     )
   )[0];
 };
 export const getUser = (email) => {
-  console.log("I'm inside the sql function", email);
-  return db.any("SELECT * FROM users WHERE account=$1", [email]);
+  return db
+    .any("SELECT * FROM users WHERE account=$1", [email])
+    .then((data) => {
+      console.log("got query results:", data);
+      return data.id;
+    });
 };
 
 export const addUser = async (email) => {
