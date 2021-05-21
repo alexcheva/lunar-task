@@ -161,6 +161,11 @@ a:hover {
   padding-right: 3em;
   padding-left: 3em;
 }
+#quoteImg {
+  width: 100%;
+  height: auto;
+}
+
 btn-info.disabled,
 .btn-info:disabled {
   background-color: #9b22aa;

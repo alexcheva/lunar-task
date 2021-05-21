@@ -36,11 +36,13 @@ const DayOfWeek = ({ date, svg, data, tasks }) => {
           dangerouslySetInnerHTML={{ __html: svg }}
         ></div>
         <Card.Text>
-          Moon Phase: {data}
+          <em> Moon Phase: </em>
+          {data}
           <br />
-          Action: {moonPhases[data]?.action}
+          <em> Action: </em>
+          {moonPhases[data]?.action}
           <br />
-          Details: {moonPhases[data]?.desc}
+          <em> Details:</em> {moonPhases[data]?.desc}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">

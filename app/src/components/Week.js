@@ -4,11 +4,9 @@ import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
 
-import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
+import img01 from "../imgs/04.jpeg";
 
 import DayOfWeek from "./DayOfWeek";
 
@@ -114,7 +112,7 @@ const Quote = () => {
       <Card.Body>
         <Card.Title>Inspirational Quote for the Week:</Card.Title>
 
-        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Img variant="top" id="quoteImg" src={img01} />
         <Card.Text>
           Quote: {quote.q}
           <br />

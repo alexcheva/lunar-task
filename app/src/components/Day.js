@@ -90,11 +90,14 @@ const Day = ({ initialData, userId }) => {
             }}
           ></div>
           <Card.Text>
-            Moon Phase: {dayData.AlexPhase}
+            <em> Moon Phase: </em>
+            <strong>{dayData.AlexPhase}</strong>
             <br />
-            Action: {moonPhases[dayData.AlexPhase]?.action}
+            <em> Action: </em>
+            <strong>{moonPhases[dayData.AlexPhase]?.action}</strong>
             <br />
-            Details: {moonPhases[dayData.AlexPhase]?.desc}
+            <em> Details:</em>{" "}
+            <strong>{moonPhases[dayData.AlexPhase]?.desc}</strong>
           </Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
