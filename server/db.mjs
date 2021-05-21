@@ -3,33 +3,31 @@ import pgp from "pg-promise";
 
 const db = initDb();
 
-export const getTasks = async (startDate, endDate) => {
+export const getTasks = async (userId, startDate, endDate) => {
   if (!endDate) {
-    return db.any("SELECT * FROM tasks WHERE date=$1", [startDate]);
-  } else {
-    return db.any("SELECT * FROM tasks WHERE date BETWEEN $1 AND $2", [
+    return db.any("SELECT * FROM tasks WHERE user_id=$1 AND date=$2", [
+      userId,
       startDate,
-      endDate,
     ]);
+  } else {
+    return db.any(
+      "SELECT * FROM tasks WHERE user_id=$1 AND date BETWEEN $2 AND $3",
+      [userId, startDate, endDate],
+    );
   }
-  //week get dates[0] dates[6] and query the range
-  //getTasks(new Date(2021, 4, 12)).then((result) => console.log(result));
 };
-//get tasks by week
-export const addTask = async (task, date) => {
-  const day = new Date(date);
-  const user_id = 1;
 
+export const addTask = async (task, date, userId) => {
+  const day = new Date(date);
   return (
     await db.any(
       "INSERT INTO tasks(task,date,user_id) VALUES($1,$2,$3) RETURNING id, task, date, user_id",
-      [task, day, user_id],
+      [task, day, userId],
     )
   )[0];
 };
 export const getUser = (email) => {
-  console.log("I'm inside the sql function", email);
-  return db.any("SELECT * FROM users WHERE account=$1", [email]);
+  return db.oneOrNone("SELECT * FROM users WHERE account=$1 LIMIT 1", [email]);
 };
 
 export const addUser = async (email) => {

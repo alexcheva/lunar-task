@@ -1,14 +1,16 @@
 import * as React from "react";
 
 import dayjs from "dayjs";
-import CardGroup from "react-bootstrap/CardGroup";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import CardDeck from "react-bootstrap/CardDeck";
 
-import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
+import img01 from "../imgs/04.jpeg";
 
 import DayOfWeek from "./DayOfWeek";
 
-const Week = ({ initialData }) => {
+const Week = ({ initialData, userId }) => {
   const [startOfWeek, setStartOfWeek] = React.useState(
     dayjs().startOf("week").add(1, "day"),
   );
@@ -19,16 +21,20 @@ const Week = ({ initialData }) => {
   for (let i = 0; i < 7; i++) {
     dates.push(startOfWeek.add(i, "day"));
   }
-  const loadTasks = async () =>
+  const loadTasks = async () => {
     setDayTasks(
-      await apiClient.getTasks(
-        dates[0].format("YYYY-MM-DD"),
-        dates[6].format("YYYY-MM-DD"),
-      ),
+      await userId
+        .then((data) => data.id)
+        .then((id) =>
+          apiClient.getTasks(
+            id,
+            dates[0].format("YYYY-MM-DD"),
+            dates[6].format("YYYY-MM-DD"),
+          ),
+        ),
     );
+  };
 
-  console.log(dayTasks);
-  //filter dates from
   const loadMoonData = async (month) => {
     const formattedData = await apiClient.getMoonData(
       month,
@@ -55,15 +61,16 @@ const Week = ({ initialData }) => {
   return (
     <>
       <h2>
-        <button onClick={() => changeWeek(-1)}>
+        <Button variant="info" onClick={() => changeWeek(-1)}>
           <i className="bi bi-arrow-left-circle"></i>
-        </button>{" "}
-        Week View
-        <button onClick={() => changeWeek(1)}>
+        </Button>{" "}
+        Week View{" "}
+        <Button variant="info" onClick={() => changeWeek(1)}>
           <i className="bi bi-arrow-right-circle"></i>
-        </button>
+        </Button>
       </h2>
-      <CardGroup>
+      <CardDeck>
+        <Quote />
         {dates.map((date, i) => {
           const tasksOfTheDay = dayTasks.filter(
             (task) =>
@@ -72,6 +79,7 @@ const Week = ({ initialData }) => {
           );
           return (
             <DayOfWeek
+              userId={userId}
               date={date}
               tasks={tasksOfTheDay}
               key={i}
@@ -80,9 +88,45 @@ const Week = ({ initialData }) => {
             />
           );
         })}
-      </CardGroup>
+      </CardDeck>
     </>
   );
 };
+const Quote = () => {
+  // const [quote, setQuote] = React.useState({});
 
+  // const loadQuote = async () =>
+  //   setQuote(await apiClient.getQuote(date.format("YYYY-MM-DD")));
+
+  // React.useEffect(() => {
+  //   setQuote(quoteData);
+  // }, [quoteData]);
+  const quote = {
+    q: "The merit of all things lies in their difficulty.",
+    a: "Alexandre Dumas",
+    h:
+      "<blockquote>&ldquo;The merit of all things lies in their difficulty.&rdquo; &mdash; <footer>Alexandre Dumas</footer></blockquote>",
+  };
+  return (
+    <Card
+      className="text-center"
+      style={{ width: "18rem" }}
+      bg="dark"
+      text="light"
+    >
+      <Card.Body>
+        <Card.Title>Quote Of the Week:</Card.Title>
+
+        <Card.Img variant="top" id="quoteImg" src={img01} />
+        <Card.Text>
+          Quote:
+          <em> {quote.q}</em>
+          <br />
+          Author:
+          <em> {quote.a}</em>
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
 export default Week;

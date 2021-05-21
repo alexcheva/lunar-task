@@ -5,18 +5,27 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import DatePicker from "react-datepicker";
+import { Link, useParams, useHistory } from "react-router-dom";
 
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
 //rename data to props
-const Day = ({ initialData }) => {
-  const today = dayjs();
-  const [date, setDate] = React.useState(today);
+const Day = ({ initialData, userId }) => {
+  let { day } = useParams();
+  let history = useHistory();
+
+  const [date, setDate] = React.useState(dayjs(day));
   const [tasks, setTasks] = React.useState([]);
   const [data, setData] = React.useState(initialData);
 
-  const loadTasks = async () =>
-    setTasks(await apiClient.getTasks(date.format("YYYY-MM-DD")));
+  const loadTasks = async () => {
+    setTasks(
+      await userId
+        .then((data) => data.id)
+        .then((id) => apiClient.getTasks(id, date.format("YYYY-MM-DD"))),
+    );
+  };
 
   const loadMoonData = async (month) => {
     const formattedData = await apiClient.getMoonData(
@@ -28,12 +37,13 @@ const Day = ({ initialData }) => {
 
   const changeDateValue = (addValue) => {
     let newDate = date.add(addValue, "day");
-    if (newDate.month() !== date.month()) {
-      loadMoonData(newDate.month());
-    }
     setDate(newDate);
   };
+
   React.useEffect(() => {
+    if (data[0]?.month !== date.month()) {
+      loadMoonData(date.month());
+    }
     loadTasks();
   }, [date]);
   React.useEffect(() => {
@@ -48,38 +58,61 @@ const Day = ({ initialData }) => {
   const svg = dayData.svg;
 
   return (
-    <Card className="text-center" bg="dark" text="light">
-      <Card.Body>
-        <Card.Title>
-          <button onClick={() => changeDateValue(-1)}>
-            <i className="bi bi-arrow-left-circle"></i>
-          </button>{" "}
-          {date.format("ddd MMM D YYYY")}{" "}
-          <button onClick={() => changeDateValue(1)}>
-            <i className="bi bi-arrow-right-circle"></i>
-          </button>
-        </Card.Title>
-        <div
-          className="card-img-top mx-auto d-block"
-          dangerouslySetInnerHTML={{
-            __html: svg,
-          }}
-        ></div>
-        <Card.Text>
-          Moon Phase: {dayData.AlexPhase}
-          <br />
-          Action: {moonPhases[dayData.AlexPhase]?.action}
-          <br />
-          Details: {moonPhases[dayData.AlexPhase]?.desc}
-        </Card.Text>
-      </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroupItem variant="dark">
-          <AddTask loadTasks={loadTasks} date={date} />
-        </ListGroupItem>
-      </ListGroup>
-      <TaskList loadTasks={loadTasks} tasks={tasks} />
-    </Card>
+    <section>
+      <Card className="text-center" bg="dark" text="light">
+        <Card.Header>
+          Choose the Date:{" "}
+          <DatePicker
+            selected={date.toDate()}
+            onChange={(date) => {
+              setDate(dayjs(date));
+              history.push(`/day/${dayjs(date).format("YYYY-MM-DD")}`);
+            }}
+          />
+        </Card.Header>
+        <Card.Body>
+          <Card.Title>
+            <Link to={`/day/${date.add(-1, "day").format("YYYY-MM-DD")}`}>
+              <Button
+                variant="outline-info"
+                onClick={() => changeDateValue(-1)}
+              >
+                <i className="bi bi-arrow-left-circle"></i>
+              </Button>
+            </Link>{" "}
+            {date.format("ddd MMM D YYYY")}{" "}
+            <Link to={`/day/${date.add(1, "day").format("YYYY-MM-DD")}`}>
+              <Button variant="outline-info" onClick={() => changeDateValue(1)}>
+                <i className="bi bi-arrow-right-circle"></i>
+              </Button>
+            </Link>
+          </Card.Title>
+          <div
+            id="day-view-moon"
+            className="card-img-top mx-auto d-block"
+            dangerouslySetInnerHTML={{
+              __html: svg,
+            }}
+          ></div>
+          <Card.Text>
+            <em> Moon Phase: </em>
+            <strong>{dayData.AlexPhase}</strong>
+            <br />
+            <em> Action: </em>
+            <strong>{moonPhases[dayData.AlexPhase]?.action}</strong>
+            <br />
+            <em> Details:</em>{" "}
+            <strong>{moonPhases[dayData.AlexPhase]?.desc}</strong>
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem variant="dark">
+            <AddTask loadTasks={loadTasks} userId={userId} date={date} />
+          </ListGroupItem>
+        </ListGroup>
+        <TaskList loadTasks={loadTasks} userId={userId} tasks={tasks} />
+      </Card>
+    </section>
   );
 };
 
@@ -93,9 +126,6 @@ const TaskList = ({ loadTasks, tasks }) => {
       {tasks.map(({ id, task }) => (
         <ListGroupItem variant="dark" key={id}>
           {task}{" "}
-          <Button variant="outline-warning" size="sm">
-            <i className="bi bi-pencil-square"></i>
-          </Button>{" "}
           <Button
             variant="outline-danger"
             size="sm"
@@ -110,7 +140,7 @@ const TaskList = ({ loadTasks, tasks }) => {
   );
 };
 
-const AddTask = ({ loadTasks, date }) => {
+const AddTask = ({ loadTasks, date, userId }) => {
   const [task, setTask] = React.useState("");
 
   const canAdd = task !== "";
@@ -118,7 +148,9 @@ const AddTask = ({ loadTasks, date }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (canAdd) {
-      await apiClient.addTask(task, date);
+      await userId
+        .then((data) => data.id)
+        .then((id) => apiClient.addTask(task, date, id));
       loadTasks();
       setTask("");
     }
@@ -129,8 +161,10 @@ const AddTask = ({ loadTasks, date }) => {
       <label>
         New task:{" "}
         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>
-      <button disabled={!canAdd}>Add</button>
+      </label>{" "}
+      <Button type="submit" variant="info" disabled={!canAdd}>
+        Add
+      </Button>
     </form>
   );
 };

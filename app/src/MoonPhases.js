@@ -18,7 +18,12 @@ export const calculateMoonPhase = (num) => {
     return "Waning Crescent";
   }
 };
-
+// export const img = {
+//   01: { img01 },
+//   02: img02,
+//   03: img03,
+//   04: img04,
+// };
 export const moonPhases = {
   "Last Quarter": {
     action: "Release and Let go",
