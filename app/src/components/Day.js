@@ -68,15 +68,18 @@ const Day = ({ initialData }) => {
         <Card.Body>
           <Card.Title>
             <Link to={`/day/${date.add(-1, "day").format("YYYY-MM-DD")}`}>
-              <button onClick={() => changeDateValue(-1)}>
+              <Button
+                variant="outline-info"
+                onClick={() => changeDateValue(-1)}
+              >
                 <i className="bi bi-arrow-left-circle"></i>
-              </button>
+              </Button>
             </Link>{" "}
             {date.format("ddd MMM D YYYY")}{" "}
             <Link to={`/day/${date.add(1, "day").format("YYYY-MM-DD")}`}>
-              <button onClick={() => changeDateValue(1)}>
+              <Button variant="outline-info" onClick={() => changeDateValue(1)}>
                 <i className="bi bi-arrow-right-circle"></i>
-              </button>
+              </Button>
             </Link>
           </Card.Title>
           <div
