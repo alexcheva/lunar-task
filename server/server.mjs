@@ -33,7 +33,7 @@ app.post("/users/user", async (request, response) => {
   const email = request.body.email;
   let user = await db.getUser(email);
   console.log(user);
-  if (!user.length) {
+  if (!user) {
     user = await db.addUser(email);
   }
   response.json(user);
