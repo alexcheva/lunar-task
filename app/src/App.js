@@ -62,7 +62,7 @@ const App = () => {
         <main>
           <Container fluid>
             <Navbar bg="dark" variant="dark">
-              <Navbar.Brand>
+              <Navbar.Brand href="/">
                 <img
                   alt="Lunar Task Logo"
                   src={logo}
@@ -74,15 +74,16 @@ const App = () => {
               </Navbar.Brand>
               <Nav className="justify-content-end" activeKey="/home">
                 <Nav.Item>
-                  <Nav.Link active>
-                    <Link to={`/day/${dayjs().format("YYYY-MM-DD")}`}>
-                      Day View
-                    </Link>
+                  <Nav.Link
+                    active
+                    href={`/day/${dayjs().format("YYYY-MM-DD")}`}
+                  >
+                    Day View
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="link-1">
-                    <Link to="/week">Week View</Link>
+                  <Nav.Link eventKey="link-1" href="/week">
+                    Week View
                   </Nav.Link>
                 </Nav.Item>
                 <NavDropdown title={username} id="nav-dropdown">
