@@ -32,7 +32,7 @@ canvas {
   background-color: rgba(0 0 0 / 50%) !important;
 }
 svg {
-  filter: drop-shadow(0 0 49px rgba(268, 27, 238, 0.25));
+  filter: drop-shadow(0 0 49px rgba(268, 27, 238, 0.5));
 }
 .list-group-item {
   background-color: rgba(0 0 0 / 0%) !important;
