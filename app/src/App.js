@@ -67,7 +67,7 @@ const App = () => {
     return (
       <Router>
         <Container fluid>
-          <Navbar bg="dark" variant="dark">
+          <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg">
             <Navbar.Brand href="/">
               <img
                 alt="Lunar Task Logo"
@@ -78,26 +78,29 @@ const App = () => {
               />{" "}
               Lunar Task
             </Navbar.Brand>
-            <Nav className="justify-content-end" activeKey="/home">
-              <Nav.Item>
-                <Nav.Link active href={`/day/${dayjs().format("YYYY-MM-DD")}`}>
-                  Day View
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="link-1" href="/week">
-                  Week View
-                </Nav.Link>
-              </Nav.Item>
-              <NavDropdown title={username} id="nav-dropdown">
-                <NavDropdown.Item
-                  eventKey="2.1"
-                  onClick={() => logout({ returnTo: window.location.origin })}
-                >
-                  Log Out
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav fill className="justify-content-end" activeKey="/home">
+                <Nav.Item>
+                  <Nav.Link href={`/day/${dayjs().format("YYYY-MM-DD")}`}>
+                    Day View
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="link-1" href="/week">
+                    Week View
+                  </Nav.Link>
+                </Nav.Item>
+                <NavDropdown title={username} id="nav-dropdown">
+                  <NavDropdown.Item
+                    eventKey="2.1"
+                    onClick={() => logout({ returnTo: window.location.origin })}
+                  >
+                    Log Out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>
           </Navbar>
         </Container>
         <Container>

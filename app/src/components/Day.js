@@ -45,7 +45,7 @@ const Day = ({ initialData, userId }) => {
       loadMoonData(date.month());
     }
     loadTasks();
-  }, [date]);
+  }, [date, data]);
   React.useEffect(() => {
     setData(initialData);
   }, [initialData]);

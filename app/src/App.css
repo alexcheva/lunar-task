@@ -156,42 +156,40 @@ h2 {
 }
 /* .auth0-lock.auth0-lock .auth0-lock-header-bg {
   background: rgba(241,241,241,0.8);} */
-/* nav {
-  text-align: end;
+.react-datepicker__day:hover,
+.react-datepicker__month-text:hover,
+.react-datepicker__quarter-text:hover,
+.react-datepicker__year-text:hover,
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--in-range:hover,
+.react-datepicker__month-text--selected:hover,
+.react-datepicker__month-text--in-selecting-range:hover,
+.react-datepicker__month-text--in-range:hover,
+.react-datepicker__quarter-text--selected:hover,
+.react-datepicker__quarter-text--in-selecting-range:hover,
+.react-datepicker__quarter-text--in-range:hover,
+.react-datepicker__year-text--selected:hover,
+.react-datepicker__year-text--in-selecting-range:hover,
+.react-datepicker__year-text--in-range:hover {
+  background-color: #9b22aa;
+  color: #fff;
 }
-
-li {
-  display: inline-block;
-  padding: 0.8rem;
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected,
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+  background-color: #d84df1;
 }
-
-a {
-  text-decoration: none;
-  font-weight: 600;
-}
-nav li a {
-  color: #ffeb00;
-  font-size: 1.3rem;
-  text-shadow: 2px 2px #7e0000;
-}
-nav li a:hover {
-  color: #ffeb00;
-}
-a:hover,
-a:focus {
-  text-decoration: underline;
-}
-input[type="submit"] {
-  padding: 10px 15px;
-  font-weight: 600;
-  background: #7ed549;
-  border-radius: 9px;
-  border-color: #673ab7;
-  letter-spacing: 0.025em;
-  color: #000429;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-input[type="submit"]:active {
-  background: #1cccfb;
-} */
