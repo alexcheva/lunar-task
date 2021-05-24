@@ -27,7 +27,12 @@ canvas {
   justify-content: center;
   height: 100vh;
 }
-
+#interactive {
+  z-index: 1;
+}
+.container {
+  padding-bottom: 2rem;
+}
 .Aligner-item {
   max-width: 50%;
 }

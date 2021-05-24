@@ -8,6 +8,9 @@ import Particles from "react-particles-js";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./App.css";
+
+// const { isLoading } = Auth0Provider();
+// const id = isLoading ? "interactive" : "";
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
