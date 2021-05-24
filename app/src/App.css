@@ -69,11 +69,14 @@ img#header-logo {
 .container-fluid {
   padding: 0;
 }
-a {
+a,
+.navbar-dark .navbar-nav .nav-link {
   color: #e54fff;
 }
-a:hover {
+a:hover,
+.navbar-dark:hover .navbar-nav:hover .nav-link:hover {
   color: #e48df3;
+  text-decoration: underline;
 }
 .jumbotron,
 .list-group-item-dark {
