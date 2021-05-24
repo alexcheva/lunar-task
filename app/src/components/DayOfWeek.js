@@ -50,8 +50,8 @@ const DayOfWeek = ({ date, svg, data, tasks, userId }) => {
           <em> Details:</em> {moonPhases[data]?.desc}
         </Card.Text>
       </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroupItem variant="dark">
+      <ListGroup>
+        <ListGroupItem>
           <AddTask loadDayTasks={loadDayTasks} userId={userId} date={date} />
         </ListGroupItem>
       </ListGroup>
@@ -60,10 +60,10 @@ const DayOfWeek = ({ date, svg, data, tasks, userId }) => {
   );
 };
 
-const TaskList = ({ loadTasks, tasks }) => {
+const TaskList = ({ loadDayTasks, tasks }) => {
   const deleteTask = async (id) => {
     await apiClient.deleteTask(id);
-    loadTasks();
+    loadDayTasks();
   };
   return (
     <ListGroup className="list-group-flush">
@@ -101,7 +101,7 @@ const AddTask = ({ loadDayTasks, date, userId }) => {
   };
 
   return (
-    <form bg="dark" text="light" onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <label>
         New task:{" "}
         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />

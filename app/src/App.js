@@ -11,7 +11,7 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import Spinner from "react-bootstrap/Spinner";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import * as apiClient from "./apiClient";
 import Day from "./components/Day";
@@ -59,69 +59,64 @@ const App = () => {
 
     return (
       <Router>
-        <main>
-          <Container fluid>
-            <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="/">
-                <img
-                  alt="Lunar Task Logo"
-                  src={logo}
-                  width="30"
-                  height="30"
-                  className="d-inline-block align-top"
-                />{" "}
-                Lunar Task
-              </Navbar.Brand>
-              <Nav className="justify-content-end" activeKey="/home">
-                <Nav.Item>
-                  <Nav.Link
-                    active
-                    href={`/day/${dayjs().format("YYYY-MM-DD")}`}
-                  >
-                    Day View
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="link-1" href="/week">
-                    Week View
-                  </Nav.Link>
-                </Nav.Item>
-                <NavDropdown title={username} id="nav-dropdown">
-                  <NavDropdown.Item
-                    eventKey="2.1"
-                    onClick={() => logout({ returnTo: window.location.origin })}
-                  >
-                    Log Out
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-            </Navbar>
-          </Container>
-          <Container>
-            <Switch>
-              <Route path="/week">
-                <section>
-                  <Week initialData={moonPhaseData} userId={userId} />
-                </section>
-              </Route>
-              <Route path="/day/:day">
-                <section>
-                  <Day initialData={moonPhaseData} userId={userId} />
-                </section>
-              </Route>
-              <Route path="/">
-                <section>
-                  <Day initialData={moonPhaseData} userId={userId} />
-                </section>
-              </Route>
-            </Switch>
-          </Container>
-        </main>
+        <Container fluid>
+          <Navbar bg="dark" variant="dark">
+            <Navbar.Brand href="/">
+              <img
+                alt="Lunar Task Logo"
+                src={logo}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+              />{" "}
+              Lunar Task
+            </Navbar.Brand>
+            <Nav className="justify-content-end" activeKey="/home">
+              <Nav.Item>
+                <Nav.Link active href={`/day/${dayjs().format("YYYY-MM-DD")}`}>
+                  Day View
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="link-1" href="/week">
+                  Week View
+                </Nav.Link>
+              </Nav.Item>
+              <NavDropdown title={username} id="nav-dropdown">
+                <NavDropdown.Item
+                  eventKey="2.1"
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  Log Out
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar>
+        </Container>
+        <Container>
+          <Switch>
+            <Route path="/week">
+              <section>
+                <Week initialData={moonPhaseData} userId={userId} />
+              </section>
+            </Route>
+            <Route path="/day/:day">
+              <section>
+                <Day initialData={moonPhaseData} userId={userId} />
+              </section>
+            </Route>
+            <Route path="/">
+              <section>
+                <Day initialData={moonPhaseData} userId={userId} />
+              </section>
+            </Route>
+          </Switch>
+        </Container>
       </Router>
     );
   } else {
     return (
-      <Jumbotron fluid>
+      <Jumbotron className="bg-dark" fluid>
         <h1>
           <img alt="Lunar Task Logo" className="intro-logo" src={logo} /> Lunar
           Task
