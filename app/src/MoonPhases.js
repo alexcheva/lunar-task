@@ -58,6 +58,6 @@ export const moonPhases = {
   },
   "Waning Crescent": {
     action: "Surrender",
-    desc: "recuperate and rest. It is okay to feel empty sometimes.",
+    desc: "Recuperate and rest. It is okay to feel empty sometimes.",
   },
 };

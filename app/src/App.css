@@ -138,6 +138,9 @@ a:hover {
   width: 100%;
   height: auto;
 }
+#day-view-moon {
+  width: 30%;
+}
 
 btn-info.disabled,
 .btn-info:disabled {
@@ -148,6 +151,7 @@ h2 {
   margin-top: 1.4rem;
   color: #f8f9fa;
 }
+.jumbotron,
 .card,
 .card-group > .card:not(:first-child) {
   border-radius: 0.25rem;
@@ -222,5 +226,18 @@ input {
 @media only screen and (min-width: 320px) {
   .btn {
     padding: 0.2rem 0.45rem;
+  }
+  .h5,
+  h5 {
+    font-size: 1rem;
+  }
+  .card {
+    min-width: 20%;
+    margin: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .react-datepicker-popper {
+    transform: translate3d(0px, 100px, 0px);
   }
 }

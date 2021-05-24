@@ -84,7 +84,7 @@ const Day = ({ initialData, userId }) => {
               <i className="bi bi-arrow-left-circle"></i>
             </Button>
           </Link>{" "}
-          {date.format("ddd MMM D YYYY")}{" "}
+          {date.format("ddd MMM D YY")}{" "}
           <Link to={`/day/${date.add(1, "day").format("YYYY-MM-DD")}`}>
             <Button
               variant="outline-info"

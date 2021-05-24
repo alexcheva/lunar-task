@@ -118,25 +118,31 @@ const App = () => {
     );
   } else {
     return (
-      <Jumbotron className="bg-dark" fluid>
-        <h1>
-          <img alt="Lunar Task Logo" className="intro-logo" src={logo} /> Lunar
-          Task
-        </h1>
-        <p>
-          <strong> Lunar task</strong> is a task management app that integrates
-          with Moon Phase API to provide spiritual context for the day and keep
-          your intentions in line with the universe.
-          <span role="img" aria-label="sparkling stars emoji">
-            ✨
-          </span>
-        </p>
-        <p>
-          <Button onClick={() => loginWithRedirect()} variant="info">
-            Log in
-          </Button>
-        </p>
-      </Jumbotron>
+      <Container fluid>
+        <Row className="Aligner">
+          <Col md="Aligner-item">
+            <Jumbotron className="bg-dark" fluid>
+              <h1>
+                <img alt="Lunar Task Logo" className="intro-logo" src={logo} />{" "}
+                Lunar Task
+              </h1>
+              <p>
+                <strong>Lunar task</strong> is a task management app that
+                integrates with Moon Phase API to provide spiritual context for
+                the day and keep your intentions in line with the universe.
+                <span role="img" aria-label="sparkling stars emoji">
+                  ✨
+                </span>
+              </p>
+              <p>
+                <Button onClick={() => loginWithRedirect()} variant="info">
+                  Log in
+                </Button>
+              </p>
+            </Jumbotron>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 };
