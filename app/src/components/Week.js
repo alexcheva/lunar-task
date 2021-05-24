@@ -118,8 +118,7 @@ const Quote = () => {
   const quote = {
     q: "The merit of all things lies in their difficulty.",
     a: "Alexandre Dumas",
-    h:
-      "<blockquote>&ldquo;The merit of all things lies in their difficulty.&rdquo; &mdash; <footer>Alexandre Dumas</footer></blockquote>",
+    h: "<blockquote>&ldquo;The merit of all things lies in their difficulty.&rdquo; &mdash; <footer>Alexandre Dumas</footer></blockquote>",
   };
   return (
     <Card className="text-center" bg="dark" text="light">

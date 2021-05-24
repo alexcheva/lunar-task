@@ -23,13 +23,8 @@ import logo from "./moon-logo.svg";
 const App = () => {
   const [moonPhaseData, setMoonPhaseData] = React.useState({});
 
-  const {
-    user,
-    isAuthenticated,
-    isLoading,
-    loginWithRedirect,
-    logout,
-  } = useAuth0();
+  const { user, isAuthenticated, isLoading, loginWithRedirect, logout } =
+    useAuth0();
 
   const loadMoonData = async () => {
     const formattedData = await apiClient.getMoonData(

@@ -31,8 +31,7 @@ export const moonPhases = {
   },
   "New Moon": {
     action: "New Beginnings",
-    desc:
-      "It's time for a clean slate, start to gather your thoughts and plan.",
+    desc: "It's time for a clean slate, start to gather your thoughts and plan.",
   },
   "Waxing Crescent": {
     action: "Set Intentions",
@@ -40,13 +39,11 @@ export const moonPhases = {
   },
   "First Quarter": {
     action: "Take Action",
-    desc:
-      "When you face obstacles, do not waver. It's time for pushing forward.",
+    desc: "When you face obstacles, do not waver. It's time for pushing forward.",
   },
   "Waxing Gibbous": {
     action: "Refine and Hone",
-    desc:
-      "Observe and align your hopes with the universe. Momentum is building.",
+    desc: "Observe and align your hopes with the universe. Momentum is building.",
   },
   "Full Moon": {
     action: "Harvest Endeavors",
