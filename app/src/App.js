@@ -72,9 +72,7 @@ const App = () => {
               <img
                 alt="Lunar Task Logo"
                 src={logo}
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
+                className="d-inline-block align-top logo"
               />{" "}
               Lunar Task
             </Navbar.Brand>
@@ -106,19 +104,13 @@ const App = () => {
         <Container>
           <Switch>
             <Route path="/week">
-              <section>
-                <Week initialData={moonPhaseData} userId={userId} />
-              </section>
+              <Week initialData={moonPhaseData} userId={userId} />
             </Route>
             <Route path="/day/:day">
-              <section>
-                <Day initialData={moonPhaseData} userId={userId} />
-              </section>
+              <Day initialData={moonPhaseData} userId={userId} />
             </Route>
             <Route path="/">
-              <section>
-                <Day initialData={moonPhaseData} userId={userId} />
-              </section>
+              <Day initialData={moonPhaseData} userId={userId} />
             </Route>
           </Switch>
         </Container>

@@ -3,6 +3,8 @@ import * as React from "react";
 import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import DatePicker from "react-datepicker";
@@ -58,10 +60,10 @@ const Day = ({ initialData, userId }) => {
   const svg = dayData.svg;
 
   return (
-    <section>
-      <Card className="text-center" bg="dark" text="light">
-        <Card.Header>
-          Choose the Date:{" "}
+    <Card className="text-center" bg="dark" text="light">
+      <Card.Header>
+        Choose the Date:{" "}
+        <div className="customDatePickerWidth">
           <DatePicker
             selected={date.toDate()}
             onChange={(date) => {
@@ -69,50 +71,55 @@ const Day = ({ initialData, userId }) => {
               history.push(`/day/${dayjs(date).format("YYYY-MM-DD")}`);
             }}
           />
-        </Card.Header>
-        <Card.Body>
-          <Card.Title>
-            <Link to={`/day/${date.add(-1, "day").format("YYYY-MM-DD")}`}>
-              <Button
-                variant="outline-info"
-                onClick={() => changeDateValue(-1)}
-              >
-                <i className="bi bi-arrow-left-circle"></i>
-              </Button>
-            </Link>{" "}
-            {date.format("ddd MMM D YYYY")}{" "}
-            <Link to={`/day/${date.add(1, "day").format("YYYY-MM-DD")}`}>
-              <Button variant="outline-info" onClick={() => changeDateValue(1)}>
-                <i className="bi bi-arrow-right-circle"></i>
-              </Button>
-            </Link>
-          </Card.Title>
-          <div
-            id="day-view-moon"
-            className="card-img-top mx-auto d-block"
-            dangerouslySetInnerHTML={{
-              __html: svg,
-            }}
-          ></div>
-          <Card.Text>
-            <em> Moon Phase: </em>
-            <strong>{dayData.AlexPhase}</strong>
-            <br />
-            <em> Action: </em>
-            <strong>{moonPhases[dayData.AlexPhase]?.action}</strong>
-            <br />
-            <em> Details:</em>{" "}
-            <strong>{moonPhases[dayData.AlexPhase]?.desc}</strong>
-          </Card.Text>
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem variant="dark">
-            <AddTask loadTasks={loadTasks} userId={userId} date={date} />
-          </ListGroupItem>
-        </ListGroup>
-        <TaskList loadTasks={loadTasks} userId={userId} tasks={tasks} />
-      </Card>
-    </section>
+        </div>
+      </Card.Header>
+      <Card.Body>
+        <Card.Title>
+          <Link to={`/day/${date.add(-1, "day").format("YYYY-MM-DD")}`}>
+            <Button
+              variant="outline-info"
+              className="left"
+              onClick={() => changeDateValue(-1)}
+            >
+              <i className="bi bi-arrow-left-circle"></i>
+            </Button>
+          </Link>{" "}
+          {date.format("ddd MMM D YYYY")}{" "}
+          <Link to={`/day/${date.add(1, "day").format("YYYY-MM-DD")}`}>
+            <Button
+              variant="outline-info"
+              className="right"
+              onClick={() => changeDateValue(1)}
+            >
+              <i className="bi bi-arrow-right-circle"></i>
+            </Button>
+          </Link>
+        </Card.Title>
+        <div
+          id="day-view-moon"
+          className="card-img-top mx-auto d-block"
+          dangerouslySetInnerHTML={{
+            __html: svg,
+          }}
+        ></div>
+        <Card.Text>
+          <em> Moon Phase: </em>
+          <strong>{dayData.AlexPhase}</strong>
+          <br />
+          <em> Action: </em>
+          <strong>{moonPhases[dayData.AlexPhase]?.action}</strong>
+          <br />
+          <em> Details:</em>{" "}
+          <strong>{moonPhases[dayData.AlexPhase]?.desc}</strong>
+        </Card.Text>
+      </Card.Body>
+      <ListGroup className="list-group-flush">
+        <ListGroupItem variant="dark">
+          <AddTask loadTasks={loadTasks} userId={userId} date={date} />
+        </ListGroupItem>
+      </ListGroup>
+      <TaskList loadTasks={loadTasks} userId={userId} tasks={tasks} />
+    </Card>
   );
 };
 
@@ -157,15 +164,27 @@ const AddTask = ({ loadTasks, date, userId }) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
-        New task:{" "}
-        <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>{" "}
-      <Button type="submit" variant="info" disabled={!canAdd}>
-        Add
-      </Button>
-    </form>
+    <Form className="align-items-center" onSubmit={onSubmit}>
+      <Form.Row className="align-items-center">
+        <Col>
+          <Form.Label>
+            New task:{" "}
+            <Form.Control
+              onChange={(e) => setTask(e.currentTarget.value)}
+              value={task}
+            />
+          </Form.Label>{" "}
+          <Button
+            type="submit"
+            className="my-1"
+            variant="info"
+            disabled={!canAdd}
+          >
+            Add
+          </Button>
+        </Col>
+      </Form.Row>
+    </Form>
   );
 };
 

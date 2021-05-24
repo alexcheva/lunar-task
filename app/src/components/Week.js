@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import * as apiClient from "../apiClient";
 import img01 from "../imgs/04.jpeg";
@@ -60,15 +62,27 @@ const Week = ({ initialData, userId }) => {
 
   return (
     <>
-      <h2>
-        <Button variant="info" onClick={() => changeWeek(-1)}>
-          <i className="bi bi-arrow-left-circle"></i>
-        </Button>{" "}
-        Week View{" "}
-        <Button variant="info" onClick={() => changeWeek(1)}>
-          <i className="bi bi-arrow-right-circle"></i>
-        </Button>
-      </h2>
+      <Row>
+        <Col className="text-center">
+          <h2>
+            <Button
+              variant="info"
+              className="left"
+              onClick={() => changeWeek(-1)}
+            >
+              <i className="bi bi-arrow-left-circle"></i>
+            </Button>{" "}
+            Week View{" "}
+            <Button
+              variant="info"
+              className="right"
+              onClick={() => changeWeek(1)}
+            >
+              <i className="bi bi-arrow-right-circle"></i>
+            </Button>
+          </h2>
+        </Col>
+      </Row>
       <CardDeck>
         <Quote />
         {dates.map((date, i) => {
@@ -108,12 +122,7 @@ const Quote = () => {
       "<blockquote>&ldquo;The merit of all things lies in their difficulty.&rdquo; &mdash; <footer>Alexandre Dumas</footer></blockquote>",
   };
   return (
-    <Card
-      className="text-center"
-      style={{ width: "18rem" }}
-      bg="dark"
-      text="light"
-    >
+    <Card className="text-center" bg="dark" text="light">
       <Card.Body>
         <Card.Title>Quote Of the Week:</Card.Title>
 

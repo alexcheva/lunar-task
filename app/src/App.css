@@ -48,6 +48,11 @@ img#header-logo {
   height: 2rem;
   margin-right: 1rem;
 }
+.logo {
+  margin-right: 0.25em;
+  width: 1.5em;
+  height: 1.5em;
+}
 .card-img,
 .card-img-bottom,
 .card-img-top {
@@ -193,8 +198,29 @@ h2 {
 .react-datepicker__year-text--in-range {
   background-color: #d84df1;
 }
-
+.customDatePickerWidth,
+.customDatePickerWidth > div.react-datepicker-wrapper,
+.customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  .customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  input {
+  width: 100%;
+}
 input {
   border-radius: 0.25em;
   padding: 0.25rem 0.5rem;
+}
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+@media only screen and (min-width: 320px) {
+  .btn {
+    padding: 0.2rem 0.45rem;
+  }
 }

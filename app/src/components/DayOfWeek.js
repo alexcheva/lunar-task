@@ -2,6 +2,7 @@ import * as React from "react";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import { Link } from "react-router-dom";
@@ -24,12 +25,7 @@ const DayOfWeek = ({ date, svg, data, tasks, userId }) => {
     setDayTasks(tasks);
   }, [tasks]);
   return (
-    <Card
-      className="text-center"
-      style={{ width: "18rem" }}
-      bg="dark"
-      text="light"
-    >
+    <Card className="text-center" bg="dark" text="light">
       <Card.Body>
         <Card.Title>
           <Link to={`/day/${date.format("YYYY-MM-DD")}`}>
@@ -101,15 +97,20 @@ const AddTask = ({ loadDayTasks, date, userId }) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
-        New task:{" "}
-        <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>
-      <Button type="submit" variant="info" disabled={!canAdd}>
-        Add
-      </Button>
-    </form>
+    <Form onSubmit={onSubmit}>
+      <Form.Row className="align-items-center">
+        <Form.Label>
+          New task:{" "}
+          <Form.Control
+            onChange={(e) => setTask(e.currentTarget.value)}
+            value={task}
+          />
+        </Form.Label>{" "}
+        <Button type="submit" variant="info" disabled={!canAdd}>
+          Add
+        </Button>
+      </Form.Row>
+    </Form>
   );
 };
 
