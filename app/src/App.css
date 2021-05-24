@@ -193,3 +193,8 @@ h2 {
 .react-datepicker__year-text--in-range {
   background-color: #d84df1;
 }
+
+input {
+  border-radius: 0.25em;
+  padding: 0.25rem 0.5rem;
+}
