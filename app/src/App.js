@@ -5,11 +5,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
+import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -42,12 +44,17 @@ const App = () => {
 
   if (isLoading) {
     return (
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
+      <Container>
+        <Row className="Aligner">
+          <Col md="Aligner-item">
+            <Spinner animation="grow" className="purple" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </Col>
+        </Row>
+      </Container>
     );
   }
-
   if (isAuthenticated) {
     const username = user.email ? user.email : user.username;
 
