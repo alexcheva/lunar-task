@@ -20,7 +20,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
-CREATE ROLE tpl2_2021h1;
 --
 -- Name: journal; Type: TABLE; Schema: public; Owner: tpl2_2021h1
 --
@@ -143,7 +142,7 @@ ALTER SEQUENCE public.tasks_user_id_seq OWNED BY public.tasks.user_id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    account character varying UNIQUE,
+    account character varying,
     date_joined date
 );
 
