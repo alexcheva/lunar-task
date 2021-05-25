@@ -36,6 +36,14 @@ canvas {
 .Aligner-item {
   max-width: 50%;
 }
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: #ec7eff;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #9c27b0;
+}
 .bg-dark {
   background-color: rgba(0 0 0 / 50%) !important;
 }
