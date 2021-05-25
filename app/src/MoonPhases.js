@@ -7,15 +7,15 @@ export const calculateMoonPhase = (num) => {
   } else if (decimal === 50) {
     return "First Quarter";
   } else if (decimal >= 25 && decimal < 50) {
-    return "Waxing Gibbous";
-  } else if (decimal === 100) {
-    return "Full Moon";
+    return "Waning Crescent";
   } else if (decimal > 50 && decimal < 75) {
     return "Waning Gibbous";
   } else if (decimal === 75) {
     return "Last Quarter";
   } else if (decimal > 75 && decimal < 100) {
-    return "Waning Crescent";
+    return "Waxing Gibbous";
+  } else if (decimal === 100) {
+    return "Full Moon";
   }
 };
 // export const img = {

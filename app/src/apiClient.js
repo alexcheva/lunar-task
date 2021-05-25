@@ -24,6 +24,21 @@ export const checkUser = async (email) => {
   });
   return response.json();
 };
+export const addTask = async (task, date, userId) => {
+  const response = await fetch("/api/tasks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ task, date, userId }),
+  });
+  return response.json();
+};
+export const deleteTask = async (id) => {
+  await fetch(`/api/tasks/${id}`, {
+    method: "DELETE",
+  });
+};
 export const getMoonData = async (month, year) => {
   const url = `https://www.icalendar37.net/lunar/api/?lang=en&month=${
     month + 1
@@ -70,21 +85,4 @@ export const getMoonData = async (month, year) => {
     };
   });
   return formattedData;
-};
-
-export const addTask = async (task, date, userId) => {
-  const response = await fetch("/api/tasks", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ task, date, userId }),
-  });
-  return response.json();
-};
-
-export const deleteTask = async (id) => {
-  await fetch(`/api/tasks/${id}`, {
-    method: "DELETE",
-  });
 };
