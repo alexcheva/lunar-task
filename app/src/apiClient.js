@@ -80,7 +80,7 @@ export const getMoonData = async (month, year) => {
         )
         .replace(' fill="transparent" ', 'fill="url(#image11)"')
         .replace("rgb(255,255,210)", "white"),
-      AlexPhase: calculateMoonPhase(phase.lighting),
+      AlexPhase: calculateMoonPhase(phase.lighting, phase.phaseName),
       month: month,
     };
   });

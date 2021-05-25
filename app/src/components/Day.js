@@ -104,11 +104,7 @@ const Day = ({ initialData, userId }) => {
         ></div>
         <Card.Text>
           <em> Moon Phase: </em>
-          <strong>{dayData.phaseName}</strong>
-          <br />
           <strong>{dayData.AlexPhase}</strong>
-          <br />
-          <strong>{dayData.npWidget}</strong>
           <br />
           <em> Action: </em>
           <strong>{moonPhases[dayData.AlexPhase]?.action}</strong>

@@ -234,6 +234,10 @@ input {
 .left {
   float: left;
 }
+.btn-outline-info.focus,
+.btn-outline-info:focus {
+  box-shadow: 0 0 0 0.2rem rgb(156 39 176 / 40%);
+}
 @media only screen and (min-width: 320px) {
   .btn {
     padding: 0.2rem 0.45rem;
