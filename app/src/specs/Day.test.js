@@ -3,8 +3,8 @@ import * as td from "testdouble";
 import { render, screen, cleanup } from "@testing-library/react";
 import { MemoryRouter, Route } from "react-router-dom";
 import Day from "../components/Day";
-global.td = require("testdouble");
 require("testdouble-jest")(td, jest);
+
 let realFetch;
 const RenderWithRouter = ({ children }) => (
   <MemoryRouter>
@@ -34,13 +34,17 @@ const dayObj = {
 const fakeGetTasks = () => {
   return mockTasks;
 };
-td.replace("../apiClient", {
-  getTasks: fakeGetTasks,
-});
+// td.replace("../apiClient", {
+//   getTasks: fakeGetTasks,
+// });
 beforeEach(() => {
   realFetch = window.fetch;
   window.fetch = td.func();
-  td.when(window.fetch(td.matchers.anything())).thenReturn(mockTasks);
+  td.when(window.fetch(td.matchers.anything())).thenReturn({
+    json: () => {
+      return mockTasks;
+    },
+  });
 });
 afterEach(() => {
   window.fetch = realFetch;
@@ -48,7 +52,7 @@ afterEach(() => {
 });
 
 describe("Day", () => {
-  it("rendered successfully", () => {
+  it("rendered successfully", async () => {
     const user = Promise.resolve({ id: 1 });
     const routerDay = (
       <RenderWithRouter>
@@ -56,7 +60,7 @@ describe("Day", () => {
       </RenderWithRouter>
     );
     render(routerDay);
-    const dayComponent = screen.queryByText("Waning Gibbous");
+    const dayComponent = await screen.findByText("Moon Phase:");
     //expect(dayComponent).toBeInTheDocument();
     console.log(dayComponent);
   });
