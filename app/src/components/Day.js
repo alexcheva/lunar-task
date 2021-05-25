@@ -12,9 +12,10 @@ import { Link, useParams, useHistory } from "react-router-dom";
 
 import { moonPhases } from "../MoonPhases";
 import * as apiClient from "../apiClient";
-//rename data to props
+
 const Day = ({ initialData, userId }) => {
   let { day } = useParams();
+  debugger;
   let history = useHistory();
 
   const [date, setDate] = React.useState(dayjs(day));
