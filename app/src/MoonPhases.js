@@ -2,17 +2,11 @@ export const calculateMoonPhase = (num, phaseName) => {
   const decimal = Math.round(num);
   if (decimal === 0) {
     return "New Moon";
-  } else if (decimal > 0 && decimal < 25) {
+  } else if (decimal > 0 && decimal < 50) {
     return phaseName + " Crescent";
   } else if (decimal === 50) {
     return phaseName.replace("quarter", "Quarter");
-  } else if (decimal >= 25 && decimal < 50) {
-    return phaseName + " Crescent";
-  } else if (decimal > 50 && decimal < 75) {
-    return phaseName + " Gibbous";
-  } else if (decimal === 75) {
-    return phaseName.replace("quarter", "Quarter");
-  } else if (decimal > 75 && decimal < 100) {
+  } else if (decimal > 50 && decimal < 100) {
     return phaseName + " Gibbous";
   } else if (decimal === 100) {
     return "Full Moon";
