@@ -1,42 +1,66 @@
 # Lunar Task
-### Final PERN project for Techtonica.  
-**Lunar Task** is a task management app with lunar cycle integration and journaling capabilities.  
-I'm building it because I like to track my tasks and divide them between the days of the week. I also like to plan according to the moon phases and the spiritual meaning they carry. Lastly, it would be good to have a journal feature to track how I felt about each day and to reflect on the past weeks/years.  
-## Technology. 
-- I will use React, Bootstrap, and Beautiful DnD to build the UI
-- the backend API will be PEN Postgres/Express/Node
-- It will also be integrated with an external moon phase API and an external database for moon phase intentions
+
+### Final PERN project for Techtonica.
+
+**Lunar Task** is a task management app that integrates with Moon Phase API to provide spiritual context for the day and keep your intentions in line with the universe. ✨  
+I'm building it because I like to track my tasks and divide them between the days of the week. I also like to plan according to the moon phases and the spiritual meaning they carry.  
+Additionally, it would be good to have a journal feature to track how I felt about each day and to reflect on the past weeks/years.
+
+## Technology.
+
+- I will use React and Bootstrap to build the UI
+- The backend will be PEN (Postgres/Express/Node)
+- It will be integrated with an external Moon Phase API and JavaScript Object (for the intentions associated with the particular Moon Phase)
+
 ## MVP (Minimum Viable Product)
-- User registration/Login
-- Calendar/Week/Day view with the ability to add tasks
+
+- User Login/registration
+- Day/Week view with the ability to add tasks
 - Moon phase for each day with a blurb about the intentions for the day
+
 ## Additional Nice-to-Have Features
+
 - Auth0 for login/registration
 - Drag and Drop functionality
 - Adding journal entries for the day
+
 ## Technical Risks
+
 - React Beatifull DnD might be too complicated to integrate
-  - *In that case, I will just have simple edit day functionality*
+  - _In that case, I will just have simple delete day functionality_
 - Auth0 for login/registration might have issues with authentification
-  - *I will add simplified ability to register and login and store it in a separate table in my database*
+  - _I will add simplified ability to register and login and store it in a separate table in my database_
+
 ## User Flow
+
 ![user flow](imgs/user-flow.png "User Flow Chart")
+
 ## Wireframes
+
 ### Mobile Login
+
 ![login mobile](imgs/login.png "Mobile login")
+
 ### Mobile Sign up
+
 ![sign up mobile](imgs/signup.png "Mobile Sign up")
+
 ### Mobile Wireframes
+
 ![mobile wireframes](imgs/wireframes-mobile.jpg "Mobile Wireframes")
+
 ### Desktop Wireframes
+
 ![desktop wireframes](imgs/wireframes-desktop.jpg "Desktop Wireframes")
+
 ## Data Model
-Tasks  | Journal
-------------- | -------------
-id - primary key | id - primary key
-text - varchar | text - varchar
-date - datetime | date - datetime
-user_id - foreign key  | user_id - foreign key 
+
+| Users                    | Tasks                 | Journal               |
+| ------------------------ | --------------------- | --------------------- |
+| id - primary key         | id - primary key      | id - primary key      |
+| account - varchar unique | text - varchar        | text - varchar        |
+| date_joined - datetime   | date - datetime       | date - datetime       |
+| -------------            | user_id - foreign key | user_id - foreign key |
 
 ## Installation & Technology Requirements
 
@@ -46,12 +70,20 @@ This project relies on Docker to run the PostgreSQL server. You must install Doc
 
 Use one of these methods:
 
-- Use [Homebrew][] on macOS: `brew install docker`
-- [Follow the instructions on the Docker website][docker-www]
+- Use [Homebrew](https://brew.sh/) on macOS: `brew install docker`
+- [Follow the instructions on the Docker website](https://docs.docker.com/get-docker/)
+
+Once you've installed Docker Desktop, you'll need to launch the app. On macOS, it's located in `/Applications/Docker.`
 
 ### Node
 
-You'll need to install Node v14 or above. [`nvm`][nvm] is highly recommended.
+You'll need to install Node v16.0.0 or above. [`nvm`](https://github.com/nvm-sh/nvm) is highly recommended.
+
+To check your current version of Node, type in the project folder in terminal:
+
+```sh
+node -v
+```
 
 ## Set Up the Development Environment
 
@@ -76,7 +108,7 @@ server.
 2. You can choose to edit `.env` or just use as-is.
 
 [See the PostgreSQL Docker image documentation for more
-information][dh-postgres].
+information](https://hub.docker.com/_/postgres).
 
 ### Initialize the Database
 
@@ -110,6 +142,7 @@ Visit <http://localhost:3000>.
 ```sh
 npm run psql
 ```
+
 ## Deployment
 
 [Read about setting up and deploying to Heroku](docs/deployment.md)\
