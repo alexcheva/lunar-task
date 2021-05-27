@@ -10,6 +10,5 @@ describe("Foo", () => {
     const text = screen.queryByText("Hello World!");
     expect(text).toBeInTheDocument();
     const testFunc = td.func();
-    console.log(testFunc);
   });
 });

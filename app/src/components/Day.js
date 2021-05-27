@@ -15,7 +15,6 @@ import * as apiClient from "../apiClient";
 
 const Day = ({ initialData, userId }) => {
   let { day } = useParams();
-  debugger;
   let history = useHistory();
 
   const [date, setDate] = React.useState(dayjs(day));

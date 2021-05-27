@@ -41,7 +41,6 @@ const App = () => {
   React.useEffect(() => {
     loadMoonData();
   }, []);
-  console.log("yo");
   if (isLoading) {
     return (
       <Container>
@@ -55,7 +54,6 @@ const App = () => {
       </Container>
     );
   }
-  console.log("before auth, after loading");
   if (isAuthenticated) {
     const username = user.email ? user.email : user.username;
 
@@ -64,7 +62,6 @@ const App = () => {
       return currentUser;
     };
     const userId = checkUser();
-    console.log("auth passed?");
     return (
       <Router>
         <Container fluid>
@@ -118,7 +115,6 @@ const App = () => {
       </Router>
     );
   } else {
-    console.log("after else");
     return (
       <Container fluid>
         <Row className="Aligner">
