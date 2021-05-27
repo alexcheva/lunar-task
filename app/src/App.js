@@ -41,7 +41,6 @@ const App = () => {
   React.useEffect(() => {
     loadMoonData();
   }, []);
-
   if (isLoading) {
     return (
       <Container>
@@ -63,7 +62,6 @@ const App = () => {
       return currentUser;
     };
     const userId = checkUser();
-
     return (
       <Router>
         <Container fluid>
