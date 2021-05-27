@@ -62,6 +62,5 @@ describe("Day", () => {
     render(routerDay);
     const dayComponent = await screen.findByText("Moon Phase:");
     //expect(dayComponent).toBeInTheDocument();
-    console.log(dayComponent);
   });
 });
