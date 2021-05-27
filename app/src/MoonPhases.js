@@ -10,7 +10,7 @@ export const calculateMoonPhase = (num, phaseName) => {
     return phaseName + " Gibbous";
   } else if (decimal === 100) {
     return "Full Moon";
-  }else{
+  } else {
     return phaseName;
   }
 };
