@@ -84,7 +84,6 @@ const Week = ({ initialData, userId }) => {
         </Col>
       </Row>
       <CardDeck>
-        <Quote />
         {dates.map((date, i) => {
           const tasksOfTheDay = dayTasks.filter(
             (task) =>
@@ -102,6 +101,7 @@ const Week = ({ initialData, userId }) => {
             />
           );
         })}
+        <Quote />
       </CardDeck>
     </>
   );

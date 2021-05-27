@@ -1,29 +1,20 @@
-export const calculateMoonPhase = (num) => {
+export const calculateMoonPhase = (num, phaseName) => {
   const decimal = Math.round(num);
   if (decimal === 0) {
     return "New Moon";
-  } else if (decimal > 0 && decimal < 25) {
-    return "Waxing Crescent";
+  } else if (decimal > 0 && decimal < 50) {
+    return phaseName + " Crescent";
   } else if (decimal === 50) {
-    return "First Quarter";
-  } else if (decimal >= 25 && decimal < 50) {
-    return "Waxing Gibbous";
+    return phaseName.replace("quarter", "Quarter");
+  } else if (decimal > 50 && decimal < 100) {
+    return phaseName + " Gibbous";
   } else if (decimal === 100) {
     return "Full Moon";
-  } else if (decimal > 50 && decimal < 75) {
-    return "Waning Gibbous";
-  } else if (decimal === 75) {
-    return "Last Quarter";
-  } else if (decimal > 75 && decimal < 100) {
-    return "Waning Crescent";
+  }else{
+    return phaseName;
   }
 };
-// export const img = {
-//   01: { img01 },
-//   02: img02,
-//   03: img03,
-//   04: img04,
-// };
+
 export const moonPhases = {
   "Last Quarter": {
     action: "Release and Let go",

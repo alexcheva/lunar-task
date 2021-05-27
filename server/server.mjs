@@ -32,7 +32,6 @@ app.use(express.json());
 app.post("/users/user", async (request, response) => {
   const email = request.body.email;
   let user = await db.getUser(email);
-  console.log(user);
   if (!user) {
     user = await db.addUser(email);
   }
@@ -45,7 +44,11 @@ tasks.delete("/:id", async (request, response) => {
 });
 app.use("/api/tasks", tasks);
 
-process.env?.SERVE_REACT?.toLowerCase() === "true" &&
+app.get("/api/ping", (request, response) =>
+  response.json({ response: "pong" }),
+);
+
+if (process.env?.SERVE_REACT?.toLowerCase() === "true") {
   app.use(
     express.static("/app", {
       maxAge: "1d",
@@ -55,9 +58,10 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
     }),
   );
 
-app.get("/api/ping", (request, response) =>
-  response.json({ response: "pong" }),
-);
+  app.get("*", (req, res) => {
+    res.sendFile("/app/index.html");
+  });
+}
 
 app.listen(port, () => {
   console.info(`Example server listening at http://localhost:${port}`);

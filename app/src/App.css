@@ -6,9 +6,12 @@ body {
 canvas {
   display: block;
   top: 0;
-  position: absolute;
-  height: 100vh;
   z-index: -1;
+  position: fixed;
+  background-image: url("");
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
 }
 .purple {
   color: #d84df1;
@@ -24,15 +27,28 @@ canvas {
   justify-content: center;
   height: 100vh;
 }
-
+#interactive {
+  z-index: 1;
+}
+.container {
+  padding-bottom: 0.5em;
+}
 .Aligner-item {
   max-width: 50%;
+}
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: #ec7eff;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #9c27b0;
 }
 .bg-dark {
   background-color: rgba(0 0 0 / 50%) !important;
 }
 svg {
-  filter: drop-shadow(0 0 49px rgba(268, 27, 238, 0.25));
+  filter: drop-shadow(0 0 49px rgba(268, 27, 238, 0.5));
 }
 .list-group-item {
   background-color: rgba(0 0 0 / 0%) !important;
@@ -225,6 +241,10 @@ input {
 }
 .left {
   float: left;
+}
+.btn-outline-info.focus,
+.btn-outline-info:focus {
+  box-shadow: 0 0 0 0.2rem rgb(156 39 176 / 40%);
 }
 @media only screen and (min-width: 320px) {
   .btn {
